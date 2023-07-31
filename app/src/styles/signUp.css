@@ -1,0 +1,28 @@
+.signup_container {
+  width: 35%;
+  height: 60%;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 2px 100px rgba(0, 0, 0, 0.2);
+}
+.form_inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 10%;
+  padding-top: 7%;
+}
+
+.signup_container label {
+  display: block;
+  margin-bottom: 10px;
+  font-family: Outfit, sans-serif;
+  font-size: 20px;
+  color: #705cc9;
+}
+
+.signup_container input {
+  height: 30px;
+  border-radius: 7px;
+  border: 2px solid #705cc9;
+}
