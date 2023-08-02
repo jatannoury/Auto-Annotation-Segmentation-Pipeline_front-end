@@ -15,7 +15,12 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
       [placeholder_id]: e.target.value.toString(),
     }));
   };
-  const handleContainerClick = () => {
+  const handleContainerClick = (e) => {
+    console.log("TESTTTTT");
+    console.log(e.target)
+    if (e.target.className === "eye_icon") {
+      return;
+    }
     const eyeIconElement = document.querySelector(".eye_icon");
     eyeIconElement.style.borderColor = "#c9c9c9";
   };
@@ -35,24 +40,28 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
     <div className={`input_component ${signIn === true ? " sign_in" : ""}`}>
       <label htmlFor={placeholder_id}>{placeholder}</label>
       {placeholder === "Password" ? (
-        <div
-          className="password_container"
-          onClick={handleContainerClick}
-          onBlur={handleContainerBlur}
-        >
+        <div className="password_container">
           <input
             type={showPassword ? "text" : "password"}
             placeholder={placeholder}
             onChange={handleInputChange}
             id={placeholder_id}
             className="password_input"
+            onClick={handleContainerClick}
+            onBlur={handleContainerBlur}
           />
           <div onClick={handleTogglePassword} className="eye_icon">
             {showPassword === true ? <FaEye /> : <FaEyeSlash />}
           </div>
         </div>
       ) : placeholder === "Birthday" ? (
-        <input type="date" className="birthday" onChange={handleInputChange} />
+        <div className="input_container">
+          <input
+            type="date"
+            className="birthday"
+            onChange={handleInputChange}
+          />
+        </div>
       ) : placeholder === "Gender" ? (
         <div className="radio_container">
           <div className="label_radio_conatiner">
@@ -83,12 +92,14 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
           </div>
         </div>
       ) : (
-        <input
-          type="text"
-          placeholder={placeholder}
-          onChange={handleInputChange}
-          id={placeholder_id}
-        />
+        <div className="input_container">
+          <input
+            type="text"
+            placeholder={placeholder}
+            onChange={handleInputChange}
+            id={placeholder_id}
+          />
+        </div>
       )}
     </div>
   );

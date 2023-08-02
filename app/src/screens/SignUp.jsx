@@ -38,7 +38,7 @@ const SignUp = () => {
   return (
     <div className="signup_container">
       <form className="form_inputs" onSubmit={handleSubmit}>
-        <SignUpHeader />
+        <SignUpHeader placeholder={"Sign Up"}/>
         <div className="row">
           <SignUpInput
             placeholder={"First Name"}

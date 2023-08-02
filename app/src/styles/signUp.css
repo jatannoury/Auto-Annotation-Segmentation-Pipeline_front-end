@@ -49,6 +49,10 @@
   padding-right: 5px;
   color: #705cc9;
 }
+
+.input_container {
+  display: flex;
+}
 .input_component .password_input {
   border-right: none;
   border-top-right-radius: 0;
@@ -140,7 +144,7 @@ input[type="submit"]:hover {
 }
 .input_component.submit.sign_up {
   padding-left: 10%;
-  width: 42%;
+  width: 38%;
 }
 @media (max-width: 800px) {
   .signup_container {
