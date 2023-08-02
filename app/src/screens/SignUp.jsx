@@ -15,6 +15,9 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const redirect=()=>{
+    navigate("/")
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,7 +28,7 @@ const SignUp = () => {
         autoClose: 1000,
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 1000);
     } else {
       toast.error("Wrong Inputs", {
@@ -75,6 +78,7 @@ const SignUp = () => {
         </div>
         <div className="input_component submit sign_up">
           <input type="submit"></input>
+          <p className="redirect" onClick={redirect}>Already a user? Login</p>
         </div>
       </form>
     </div>

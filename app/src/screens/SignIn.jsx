@@ -14,6 +14,9 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  const redirect = () => {
+    navigate("/Register");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await backend_cnx.sign_in(formData);
@@ -50,6 +53,9 @@ const SignIn = () => {
         </div>
         <div className="input_component submit sign_in">
           <input type="submit"></input>
+          <p className="redirect" onClick={redirect}>
+            Not a user? Sign up
+          </p>
         </div>
       </form>
     </div>

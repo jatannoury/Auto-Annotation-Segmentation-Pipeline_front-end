@@ -18,3 +18,10 @@ width: 100%;
   padding-left: 10%;
   width: 80.8%;
 }
+.redirect{
+    color: #705cc9;
+}
+.redirect:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
