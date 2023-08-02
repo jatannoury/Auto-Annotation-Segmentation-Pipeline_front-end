@@ -1,10 +1,12 @@
-import "../styles/signUp.css"
+import "../styles/signUp.css";
 import SignUpHeader from "../components/SignUpHeader";
 import SignUpInput from "../components/SignUpInput";
+import { toast } from "react-toastify";
 
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -13,23 +15,29 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axiosInstance.register(formData).then((res) => {
-  //     if (res === 201) {
-  //       toast.success("User Registered");
-  //       setTimeout(() => {
-  //         navigate("/signIn");
-  //       }, 1000);
-  //     } else {
-  //       console.log("TOAST");
-  //       toast.error("Invalid Inputs");
-  //     }
-  //   });
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toast.success("User Registered", {
+      autoClose: 1000,
+    });
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+    // axiosInstance.register(formData).then((res) => {
+    //   if (res === 201) {
+    // toast.success("User Registered");
+    // setTimeout(() => {
+    //   navigate("/signIn");
+    // }, 1000);
+    //   } else {
+    //     console.log("TOAST");
+    //     toast.error("Invalid Inputs");
+    //   }
+    // });
+  };
   return (
     <div className="signup_container">
-      <form className="form_inputs">
+      <form className="form_inputs" onSubmit={handleSubmit}>
         <SignUpHeader />
         <div className="row">
           <SignUpInput
@@ -73,6 +81,6 @@ const SignUp = () => {
       </form>
     </div>
   );
-}
+};
 
-export default SignUp
+export default SignUp;
