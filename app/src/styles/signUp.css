@@ -9,6 +9,11 @@
 .sing_up_icon_container {
   color: #705cc9;
 }
+.radio_container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
 .row {
   display: flex;
   margin-top: 3%;
@@ -17,7 +22,38 @@
   gap: 10%;
   width: 85%;
 }
-
+.label_radio_conatiner {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5%;
+}
+.label_radio_conatiner input {
+  width: 10%;
+}
+.password_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.eye_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #705cc9;
+  border-left: none;
+  border-radius: 7px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-right: 5px;
+  color: #705cc9;
+}
+.input_component .password_input {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 /* labels */
 .sign_up_header {
   margin: 0;
@@ -28,14 +64,25 @@
   align-items: flex-end;
   padding-left: 10%;
   gap: 20px;
-  
 }
 .sign_up_text_label {
   color: #705cc9;
   font-size: 25px;
 }
-
-
+.label_radio_conatiner .gender_label {
+  margin-bottom: 0;
+  width: 50%;
+}
+.signup_container label {
+  display: block;
+  margin-bottom: 10px;
+  font-family: Outfit, sans-serif;
+  font-size: 20px;
+  color: #705cc9;
+}
+.gender_p_tag {
+  margin: 0;
+}
 /* inputs */
 .form_inputs {
   display: flex;
@@ -45,6 +92,8 @@
 }
 .input_component {
   width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 .signup_container input {
   height: 30px;
@@ -71,16 +120,43 @@ input:focus {
 .input_component {
   width: 50%;
 }
-.signup_container label {
-  display: block;
-  margin-bottom: 10px;
-  font-family: Outfit, sans-serif;
-  font-size: 20px;
+.custom-radio {
+  accent-color: #705cc9;
+  background-color: #705cc9;
+}
+
+/* buttons */
+input[type="submit"] {
+  height: 45px;
+  background-color: white;
+  color: white;
+  background-color: #705cc9;
+  margin-top: 20%;
+}
+input[type="submit"]:hover {
+  background-color: white;
   color: #705cc9;
+  box-shadow: 10px 10px 50px rgba(201, 158, 226, 1);
+}
+.input_component.submit.sign_up {
+  padding-left: 10%;
+  width: 42%;
 }
 @media (max-width: 800px) {
   .signup_container {
     width: 80%;
+  }
+}
+@media (min-width: 800px) and (max-width: 1000px) and (max-height: 800px) {
+  .signup_container {
+    width: 70%;
+    height: 90%;
+  }
+}
+@media (min-width: 1000px) and (max-width: 1400px) and (max-height: 800px) {
+  .signup_container {
+    width: 60%;
+    height: 90%;
   }
 }
 @media (min-width: 800px) and (max-width: 1000px) {

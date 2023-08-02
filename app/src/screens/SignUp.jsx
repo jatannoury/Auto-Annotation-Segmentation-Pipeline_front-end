@@ -30,7 +30,7 @@ const SignUp = () => {
   return (
     <div className="signup_container">
       <form className="form_inputs">
-        <SignUpHeader />  
+        <SignUpHeader />
         <div className="row">
           <SignUpInput
             placeholder={"First Name"}
@@ -42,6 +42,33 @@ const SignUp = () => {
             setFormData={setFormData}
             formData={formData}
           />
+        </div>
+        <div className="row">
+          <SignUpInput
+            placeholder={"Birthday"}
+            setFormData={setFormData}
+            formData={formData}
+          />
+          <SignUpInput
+            placeholder={"Gender"}
+            setFormData={setFormData}
+            formData={formData}
+          />
+        </div>
+        <div className="row">
+          <SignUpInput
+            placeholder={"Email"}
+            setFormData={setFormData}
+            formData={formData}
+          />
+          <SignUpInput
+            placeholder={"Password"}
+            setFormData={setFormData}
+            formData={formData}
+          />
+        </div>
+        <div className="input_component submit sign_up">
+          <input type="submit"></input>
         </div>
       </form>
     </div>

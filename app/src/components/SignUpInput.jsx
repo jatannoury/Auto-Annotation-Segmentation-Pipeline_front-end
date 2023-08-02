@@ -15,6 +15,18 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
       [placeholder_id]: e.target.value.toString(),
     }));
   };
+  const handleContainerClick = () => {
+    const eyeIconElement = document.querySelector(".eye_icon");
+    eyeIconElement.style.borderColor = "#c9c9c9";
+  };
+  const handleContainerBlur = () => {
+    const eyeIconElement = document.querySelector(".eye_icon");
+    if (eyeIconElement) {
+      // Change the border color of the eye_icon class here.
+      // For example, setting it to red:
+      eyeIconElement.style.borderColor = "#705cc9";
+    }
+  };
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -23,7 +35,11 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
     <div className={`input_component ${signIn === true ? " sign_in" : ""}`}>
       <label htmlFor={placeholder_id}>{placeholder}</label>
       {placeholder === "Password" ? (
-        <div className="password_container">
+        <div
+          className="password_container"
+          onClick={handleContainerClick}
+          onBlur={handleContainerBlur}
+        >
           <input
             type={showPassword ? "text" : "password"}
             placeholder={placeholder}
@@ -38,27 +54,33 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
       ) : placeholder === "Birthday" ? (
         <input type="date" className="birthday" onChange={handleInputChange} />
       ) : placeholder === "Gender" ? (
-        <div className="radio-container">
-          <input
-            type="radio"
-            id="male"
-            name="gender"
-            value="male"
-            onChange={handleInputChange}
-          />
-          <label htmlFor="male" className="gender_label">
-            Male
-          </label>
-          <input
-            type="radio"
-            id="female"
-            name="gender"
-            value="female"
-            onChange={handleInputChange}
-          />
-          <label htmlFor="female" className="gender_label">
-            Female
-          </label>
+        <div className="radio_container">
+          <div className="label_radio_conatiner">
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              onChange={handleInputChange}
+              className="custom-radio"
+            />
+            <label htmlFor="male" className="gender_label">
+              <p className="gender_p_tag">Male</p>
+            </label>
+          </div>
+          <div className="label_radio_conatiner">
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              onChange={handleInputChange}
+              className="custom-radio"
+            />
+            <label htmlFor="female" className="gender_label">
+              <p className="gender_p_tag">Female</p>
+            </label>
+          </div>
         </div>
       ) : (
         <input
