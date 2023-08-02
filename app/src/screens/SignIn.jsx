@@ -4,11 +4,17 @@ import SignUpHeader from "../components/SignUpHeader";
 import SignUpInput from "../components/SignUpInput";
 import { toast } from "react-toastify";
 import backend_cnx from "../tools/backend_connection";
-
-import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../redux/slicers/auth/authSlice";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { reset } from "../redux/slicers/auth/authSlice";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess,message } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -17,22 +23,39 @@ const SignIn = () => {
   const redirect = () => {
     navigate("/Register");
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await backend_cnx.sign_in(formData);
-    console.log(response);
-    if (response?.status === 200) {
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message, {
+        autoClose: 1000,
+      });
+    } else if (isSuccess) {
       toast.success("Logged In", {
         autoClose: 1000,
       });
-      setTimeout(() => {
-        navigate("/Home");
-      }, 1000);
-    } else {
-      toast.error("Wrong Credentials", {
-        autoClose: 1000,
-      });
+      navigate("/Home");
+
+      dispatch(reset());
+    } else if (isLoading) {
     }
+  }, [isError, isSuccess]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(login(formData));
+    // const response = await backend_cnx.sign_in(formData);
+    // console.log(response);
+    // if (response?.status === 200) {
+    //   toast.success("Logged In", {
+    //     autoClose: 1000,
+    //   });
+    //   setTimeout(() => {
+    //     navigate("/Home");
+    //   }, 1000);
+    // } else {
+    //   toast.error("Wrong Credentials", {
+    //     autoClose: 1000,
+    //   });
+    // }
   };
   return (
     <div className="signup_container">

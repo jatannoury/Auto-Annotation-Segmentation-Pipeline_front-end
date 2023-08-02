@@ -5,7 +5,7 @@ import sections from "../config/left_container_sections";
 
 const HomeLeftContainer = ({ burger_menu_handler }) => {
   return (
-    <div className="left_container">
+    <div className={`left_container`}>
       <LeftContainerHeader burger_menu_handler={burger_menu_handler} />
       <div className="sections">
         <div className="regular_sections">

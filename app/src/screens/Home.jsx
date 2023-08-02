@@ -12,7 +12,10 @@ const Home = () => {
   return (
     <div className="home">
       {burgerMenuClicked === true ? (
-        <HomeLeftContainer burger_menu_handler={burger_menu_handler} />
+        <HomeLeftContainer
+          burger_menu_handler={burger_menu_handler}
+          burgerMenuClicked={burgerMenuClicked}
+        />
       ) : (
         <></>
       )}
