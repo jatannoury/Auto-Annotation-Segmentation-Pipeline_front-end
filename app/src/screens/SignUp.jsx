@@ -2,7 +2,7 @@ import "../styles/signUp.css";
 import SignUpHeader from "../components/SignUpHeader";
 import SignUpInput from "../components/SignUpInput";
 import { toast } from "react-toastify";
-
+import backend_cnx from "../tools/backend_connection";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const SignUp = () => {
@@ -15,30 +15,28 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("User Registered", {
-      autoClose: 1000,
-    });
-    setTimeout(() => {
-      navigate("/login");
-    }, 1000);
-    // axiosInstance.register(formData).then((res) => {
-    //   if (res === 201) {
-    // toast.success("User Registered");
-    // setTimeout(() => {
-    //   navigate("/signIn");
-    // }, 1000);
-    //   } else {
-    //     console.log("TOAST");
-    //     toast.error("Invalid Inputs");
-    //   }
-    // });
+
+    const response = await backend_cnx.register(formData);
+    console.log(response);
+    if (response?.status === 201) {
+      toast.success("User Registered", {
+        autoClose: 1000,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    } else {
+      toast.error("Wrong Inputs", {
+        autoClose: 1000,
+      });
+    }
   };
   return (
     <div className="signup_container">
       <form className="form_inputs" onSubmit={handleSubmit}>
-        <SignUpHeader placeholder={"Sign Up"}/>
+        <SignUpHeader placeholder={"Sign Up"} />
         <div className="row">
           <SignUpInput
             placeholder={"First Name"}

@@ -3,6 +3,7 @@ import "../styles/signIn.css";
 import SignUpHeader from "../components/SignUpHeader";
 import SignUpInput from "../components/SignUpInput";
 import { toast } from "react-toastify";
+import backend_cnx from "../tools/backend_connection";
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,25 +14,22 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("User Registered", {
-      autoClose: 1000,
-    });
-    setTimeout(() => {
-      navigate("/login");
-    }, 1000);
-    // axiosInstance.register(formData).then((res) => {
-    //   if (res === 201) {
-    // toast.success("User Registered");
-    // setTimeout(() => {
-    //   navigate("/signIn");
-    // }, 1000);
-    //   } else {
-    //     console.log("TOAST");
-    //     toast.error("Invalid Inputs");
-    //   }
-    // });
+    const response = await backend_cnx.sign_in(formData);
+    console.log(response);
+    if (response?.status === 200) {
+      toast.success("Logged In", {
+        autoClose: 1000,
+      });
+      setTimeout(() => {
+        navigate("/Home");
+      }, 1000);
+    } else {
+      toast.error("Wrong Credentials", {
+        autoClose: 1000,
+      });
+    }
   };
   return (
     <div className="signup_container">
