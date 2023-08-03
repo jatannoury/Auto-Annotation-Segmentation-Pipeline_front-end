@@ -8,11 +8,11 @@ class BackendConnection {
   }
 
   async ping() {
-    const response = http_tool.get_request(this.axios_object, "/");
+    const response = await http_tool.get_request(this.axios_object, "/");
     return response;
   }
   async register(formData) {
-    const response = http_tool.post_request(
+    const response = await http_tool.post_request(
       this.axios_object,
       "/users/register",
       formData
@@ -20,9 +20,17 @@ class BackendConnection {
     return response;
   }
   async sign_in(formData) {
-    const response = http_tool.post_request(
+    const response = await http_tool.post_request(
       this.axios_object,
       "/users/login",
+      formData
+    );
+    return response;
+  }
+  async create_project(formData) {
+    const response = await http_tool.post_request(
+      this.axios_object,
+      "/project/create",
       formData
     );
     return response;

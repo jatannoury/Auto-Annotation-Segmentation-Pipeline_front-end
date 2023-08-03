@@ -12,7 +12,7 @@ import { reset } from "../redux/slicers/auth/authSlice";
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const { user, isLoading, isError, isSuccess,message } = useSelector(
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
@@ -29,13 +29,14 @@ const SignIn = () => {
       toast.error(message, {
         autoClose: 1000,
       });
+      dispatch(reset());
     } else if (isSuccess) {
+      console.log(user);
       toast.success("Logged In", {
         autoClose: 1000,
       });
-      navigate("/Home");
-
       dispatch(reset());
+      navigate("/Home");
     } else if (isLoading) {
     }
   }, [isError, isSuccess]);

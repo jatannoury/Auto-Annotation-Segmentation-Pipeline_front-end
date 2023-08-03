@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/home.css";
+
 import HomeLeftContainer from "../components/HomeLeftContainer";
 import HomeRightContainer from "../components/HomeRightContainer";
 const Home = () => {
@@ -7,7 +8,6 @@ const Home = () => {
 
   const burger_menu_handler = () => {
     setBurgerMenuClicked(!burgerMenuClicked);
-    console.log(burgerMenuClicked);
   };
   return (
     <div className="home">

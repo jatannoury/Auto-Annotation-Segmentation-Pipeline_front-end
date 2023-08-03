@@ -8,6 +8,7 @@ class HttpTool {
       })
       .catch((error) => {
         console.error(error);
+        return error
       });
   }
   get_request(axios_instance,route) {

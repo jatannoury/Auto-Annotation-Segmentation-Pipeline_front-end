@@ -16,16 +16,20 @@ const SignUp = () => {
   );
   useEffect(() => {
     if (isError) {
-      toast.error(message, {
-        autoClose: 1000,
-      });
+      message.map((err)=>{
+        toast.error(`${err.loc[1]} ${err.msg}`, {
+          autoClose: 2000,
+        });
+      })
+      
+      dispatch(reset())
     } else if (isSuccess) {
       toast.success("User Regsitered", {
         autoClose: 1000,
       });
+      dispatch(reset())
       navigate("/");
 
-      dispatch(reset());
     } else if (isLoading) {
     }
   }, [isError, isSuccess]);
@@ -43,17 +47,6 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(register(formData));
-    // console.log(response);
-    // if (response?.status === 201) {
-    //   toast.success("User Registered", {
-    //     autoClose: 1000,
-    //   });
-
-    // } else {
-    //   toast.error("Wrong Inputs", {
-    //     autoClose: 1000,
-    //   });
-    // }
   };
   if (isLoading) {
     return <Spinner />;

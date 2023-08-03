@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiFillFileAdd } from "react-icons/ai";
 import Project from "./Project";
+import Modal from "../screens/Modal";
+import CreateProject from "./CreateProject";
 
 const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
+  const [createProjectClicked, setCreateProjectClicked] = useState(false);
+  const [createProjectRequest, setCreateProjectRequest] = useState(false);
+  const toggleCreateBtn = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    if (createProjectClicked === true && e.target.className === "submit") {
+      setCreateProjectRequest(true);
+    }
+    setCreateProjectClicked(!createProjectClicked);
+  };
   let dummy_data = [
     {
       project_name: "Car Bounder Box",
@@ -41,8 +53,18 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
       status: "Done",
     },
   ];
+  useEffect(() => {
+    
+  }, []);
   return (
     <div className="right_container_root">
+      <Modal show={createProjectClicked} handleClose={toggleCreateBtn}>
+        <CreateProject
+          toggleCreateBtn={toggleCreateBtn}
+          createProjectRequest={createProjectRequest}
+          setCreateProjectRequest={setCreateProjectRequest}
+        />
+      </Modal>
       <div>
         {burgerMenuClicked === false ? (
           <RxHamburgerMenu
@@ -58,7 +80,7 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
         <div className="right_container_content">
           <div className="right_container_header">Projects</div>
           <div className="create_project">
-            <div className="create_project_btn">
+            <div className="create_project_btn" onClick={toggleCreateBtn}>
               <AiFillFileAdd />
 
               <p>Create Project</p>
@@ -74,9 +96,8 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
                   total={project["total"]}
                   status={project["status"]}
                 />
-              );    
+              );
             })}
-            
           </div>
         </div>
       </div>

@@ -14,10 +14,9 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
       ...prevFormData,
       [placeholder_id]: e.target.value.toString(),
     }));
+    console.log(formData)
   };
   const handleContainerClick = (e) => {
-    console.log("TESTTTTT");
-    console.log(e.target)
     if (e.target.className === "eye_icon") {
       return;
     }
@@ -62,19 +61,21 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
             onChange={handleInputChange}
           />
         </div>
-      ) : placeholder === "Gender" ? (
+      ) : placeholder === "Gender" || placeholder === "Protect" ? (
         <div className="radio_container">
           <div className="label_radio_conatiner">
             <input
               type="radio"
               id="male"
               name="gender"
-              value="male"
+              value={placeholder === "Gender" ? "male" : "Yes"}
               onChange={handleInputChange}
               className="custom-radio"
             />
             <label htmlFor="male" className="gender_label">
-              <p className="gender_p_tag">Male</p>
+              <p className="gender_p_tag">
+                {placeholder === "Gender" ? "Male" : "Yes"}
+              </p>
             </label>
           </div>
           <div className="label_radio_conatiner">
@@ -82,12 +83,14 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
               type="radio"
               id="female"
               name="gender"
-              value="female"
+              value={placeholder === "Gender" ? "female" : "No"}
               onChange={handleInputChange}
               className="custom-radio"
             />
             <label htmlFor="female" className="gender_label">
-              <p className="gender_p_tag">Female</p>
+              <p className="gender_p_tag">
+                {placeholder === "Gender" ? "Female" : "No"}
+              </p>
             </label>
           </div>
         </div>

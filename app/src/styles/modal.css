@@ -1,0 +1,54 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+  position: fixed;
+  background: white;
+  width: 40%;
+  min-height: 50%;
+  max-height: 50%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+.submit_row {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 10%;
+}
+.input_component.submit.sign_up {
+  padding-left: 0%;
+  width: 45%;
+}
+.input_component.submit.sign_up .close {
+  background-color: rgb(248, 73, 73);
+  border: none;
+}
+.input_component.submit.sign_up .close:hover {
+  color: white;
+    box-shadow: 0px 0px 10px rgb(248, 73, 73);
+  border: none;
+}
+.input_component.submit.sign_up .submit:hover{
+    background-color: #705cc9;
+    color: white;
+      box-shadow: 0px 0px 30px rgb(201, 158, 226);
+
+}
