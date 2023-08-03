@@ -5,7 +5,11 @@ import Project from "./Project";
 import Modal from "../screens/Modal";
 import CreateProject from "./CreateProject";
 import { useSelector, useDispatch } from "react-redux";
-import { get_projects, reset } from "../redux/slicers/projects/projectSlice";
+import {
+  delete_project,
+  reset,
+  empty_request_name,
+} from "../redux/slicers/projects/projectSlice";
 
 import { toast } from "react-toastify";
 
@@ -13,34 +17,37 @@ import Spinner from "../components/Spinner";
 const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
   const [createProjectRequest, setCreateProjectRequest] = useState(false);
-  const { projects, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.projects
-  );
+  const { projects, isLoading, isError, isSuccess, message, request_name } =
+    useSelector((state) => state.projects);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const toggleCreateBtn = (e) => {
     e.preventDefault();
-    console.log(e.target);
     if (createProjectClicked === true && e.target.className === "submit") {
       setCreateProjectRequest(true);
     }
     setCreateProjectClicked(!createProjectClicked);
   };
   useEffect(() => {
+    if (request_name != "delete_project") {
+      return;
+    }
     if (isError) {
       message.map((err) => {
         toast.error(`${err.loc[1]} ${err.msg}`, {
           autoClose: 2000,
         });
       });
-
-      dispatch(reset());
     } else if (isSuccess) {
-      dispatch(reset());
+      toast.success("Project Deleted", {
+        autoClose: 1000,
+      });
     } else if (isLoading) {
     }
-  }, [isError, isSuccess]);
+    dispatch(reset());
+    // dispatch(empty_request_name());
+  }, [isError, isSuccess, message]);
 
   return (
     <div className="right_container_root">
@@ -74,21 +81,31 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
           </div>
           <div className="projects">
             {projects !== null && projects.hasOwnProperty("data") ? (
-              projects.data.map((project) => {
-                return (
-                  <Project
-                    project_name={project["projectName"]}
-                    created_at={project["createdAt"]}
-                    remaining={
-                      project.hasOwnProperty("remaining")
-                        ? project["remaining"]
-                        : project["totalNumber"]
-                    }
-                    total={project["totalNumber"]}
-                    status={project["status"]}
-                  />
-                );
-              })
+              projects.data
+                .slice() // Create a copy of the array to avoid mutating the original data
+                .sort(
+                  (a, b) => new Date(b["createdAt"]) - new Date(a["createdAt"])
+                ) // Sort by createdAt
+                .map((project, index) => {
+                  if (index >= 5) {
+                    return <></>;
+                  }
+                  return (
+                    <Project
+                      key={project.project_id}
+                      project_name={project["projectName"]}
+                      created_at={project["createdAt"]}
+                      remaining={
+                        project.hasOwnProperty("remaining")
+                          ? project["remaining"]
+                          : project["totalNumber"]
+                      }
+                      total={project["totalNumber"]}
+                      status={project["status"]}
+                      project_id={project["project_id"]}
+                    />
+                  );
+                })
             ) : (
               <></>
             )}

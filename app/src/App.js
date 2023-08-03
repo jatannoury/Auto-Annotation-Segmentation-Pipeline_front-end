@@ -5,6 +5,7 @@ import SignIn from "./screens/SignIn";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./screens/Home";
+import InstantPrediction from "./screens/InstantPrediction";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
             <Route path="/Register" element={<SignUp />} />
             <Route path="/" element={<SignIn />} />
             <Route path="/Home" element={<Home />} />
+            <Route path="/Instant-Prediction" element={<InstantPrediction />} />
           </Routes>
         </div>
       </Router>

@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../redux/slicers/auth/authSlice";
+
 import Spinner from "../components/Spinner";
 
 const SignUp = () => {

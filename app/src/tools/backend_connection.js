@@ -40,7 +40,13 @@ class BackendConnection {
       this.axios_object,
       `/project/projects?user_id=${user_id}`
     );
-    console.log(response)
+    return response;
+  }
+  async delete_project(project_id) {
+    const response = await http_tool.delete_request(
+      this.axios_object,
+      `/project?project_id=${project_id}`
+    );
     return response;
   }
 }

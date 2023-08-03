@@ -8,19 +8,29 @@ class HttpTool {
       })
       .catch((error) => {
         console.error(error);
-        return error
+        return error;
       });
   }
-  get_request(axios_instance,route) {
+  get_request(axios_instance, route) {
     return axios_instance
       .get(route)
       .then((response) => {
-        console.log(response)
-        return response
+        return response;
       })
       .catch((error) => {
         console.error(error);
-        return error
+        return error;
+      });
+  }
+  delete_request(axios_instance, route) {
+    return axios_instance
+      .delete(route)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        console.error(error);
+        return error;
       });
   }
 }

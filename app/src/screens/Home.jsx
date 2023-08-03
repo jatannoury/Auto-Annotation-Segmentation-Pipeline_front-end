@@ -10,11 +10,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   useEffect(() => {
-    console.log("DBSJLHDBSLD HDJS ");
-    console.log("DBSJLHDBSLD HDJS ");
-    console.log("DBSJLHDBSLD HDJS ");
-    console.log("DBSJLHDBSLD HDJS ");
-    console.log("DBSJLHDBSLD HDJS ");
     dispatch(get_projects(user.userId));
   }, []);
   const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);

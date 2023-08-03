@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { create_project, reset } from "../redux/slicers/projects/projectSlice";
+import {
+  create_project,
+  reset,
+  empty_request_name,
+  set_project,
+} from "../redux/slicers/projects/projectSlice";
 import Spinner from "../components/Spinner";
 import "../styles/signUp.css";
 
@@ -15,18 +20,21 @@ const CreateProject = ({
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { projects, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.projects
-  );
+  const {
+    request_name,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
+    project,
+    projects,
+  } = useSelector((state) => state.projects);
+
   useEffect(() => {
-    if (createProjectRequest === true) {
-      setCreateProjectRequest(false);
-      dispatch(create_project(formData));
+    if (request_name !== "create_project") {
+      return;
     }
-  }, [createProjectRequest]);
-  useEffect(() => {
     if (isError) {
-      console.log(message);
       message.map((err) => {
         toast.error(err.msg, {
           autoClose: 1000,
@@ -41,7 +49,8 @@ const CreateProject = ({
       dispatch(reset());
     } else if (isLoading) {
     }
-  }, [isError, isSuccess]);
+    dispatch(empty_request_name());
+  }, [isError, isSuccess, projects]);
   const [formData, setFormData] = useState({
     projectName: "",
     totalNumber: 0,
@@ -49,6 +58,13 @@ const CreateProject = ({
     userId: user.userId,
     protect: "",
   });
+  useEffect(() => {
+    if (createProjectRequest === true) {
+      setCreateProjectRequest(false);
+      set_project(formData);
+      dispatch(create_project(formData));
+    }
+  }, [createProjectRequest]);
   if (isLoading) {
     return <Spinner />;
   }

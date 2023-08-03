@@ -14,7 +14,6 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
       ...prevFormData,
       [placeholder_id]: e.target.value.toString(),
     }));
-    console.log(formData)
   };
   const handleContainerClick = (e) => {
     if (e.target.className === "eye_icon") {
@@ -68,7 +67,7 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
               type="radio"
               id="male"
               name="gender"
-              value={placeholder === "Gender" ? "male" : "Yes"}
+              value={placeholder === "Gender" ? "male" : true}
               onChange={handleInputChange}
               className="custom-radio"
             />
@@ -83,7 +82,7 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
               type="radio"
               id="female"
               name="gender"
-              value={placeholder === "Gender" ? "female" : "No"}
+              value={placeholder === "Gender" ? "female" : false}
               onChange={handleInputChange}
               className="custom-radio"
             />

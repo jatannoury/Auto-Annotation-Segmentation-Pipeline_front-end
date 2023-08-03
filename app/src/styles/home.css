@@ -83,6 +83,7 @@
   gap: 10%;
   color: #e2e0e0;
   padding-left: 5%;
+  cursor: pointer;
 }
 .section:hover {
   background-color: rgba(112, 92, 201, 0.4);
