@@ -11,24 +11,28 @@ export const register = createAsyncThunk(
   "auth/regsiter",
   async (user, thunkApi) => {
     try {
-      return await authService.register(user);
+      let response = await authService.register(user);
+      if (response.status !== 201) {
+        return thunkApi.rejectWithValue(response.response.data.detail);
+      }
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+        (error.response && error.response) || error.message || error.toString();
       return thunkApi.rejectWithValue(message);
     }
   }
 );
 export const login = createAsyncThunk("auth/login", async (user, thunkApi) => {
   try {
-    return await authService.login(user);
+    let response = await authService.login(user);
+    console.log(response);
+    if (response.status !== 200) {
+      return thunkApi.rejectWithValue(response.response.data.message);
+    }
+    return response;
   } catch (error) {
     const message =
-      (error.response && error.response.data && error.response.data.message) ||
+      (error.response && error.response?.message) ||
       error.message ||
       error.toString();
     return thunkApi.rejectWithValue(message);
@@ -55,13 +59,19 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload;
       })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
       .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.user = action.payload;
+        state.user = action.payload.data.user_info[0];
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
