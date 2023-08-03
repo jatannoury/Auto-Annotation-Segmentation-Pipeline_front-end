@@ -15,10 +15,12 @@ class HttpTool {
     return axios_instance
       .get(route)
       .then((response) => {
+        console.log(response)
         return response
       })
       .catch((error) => {
         console.error(error);
+        return error
       });
   }
 }

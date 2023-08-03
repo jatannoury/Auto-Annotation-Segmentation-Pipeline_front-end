@@ -13,10 +13,27 @@ export const create_project = createAsyncThunk(
     try {
       console.log(project);
       let response = await authService.create_project(project);
-      if(response?.status === 201){
-        return thunkApi.fulfillWithValue("Project Created")
+      if (response?.status === 201) {
+        return thunkApi.fulfillWithValue("Project Created");
+      } else if (response?.response.status !== 201) {
+        return thunkApi.rejectWithValue(response.response.data.detail);
       }
-      else if (response?.response.status !== 201) {
+    } catch (error) {
+      const message =
+        (error.response && error.response) || error.message || error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+export const get_projects = createAsyncThunk(
+  "projects/projects",
+  async (user_id, thunkApi) => {
+    try {
+      let response = await authService.get_projects(user_id);
+      console.log("==============>",response)
+      if (response.status === 200) {
+        return response;
+      } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
       }
     } catch (error) {
@@ -46,12 +63,26 @@ export const authSlice = createSlice({
       .addCase(create_project.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.user = action.payload;
       })
       .addCase(create_project.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(get_projects.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(get_projects.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        console.log(action.payload)
+        state.projects = action.payload.data;
+      })
+      .addCase(get_projects.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.projects = null;
         state.message = action.payload;
       });
   },

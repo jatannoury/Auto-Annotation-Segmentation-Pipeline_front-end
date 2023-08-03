@@ -35,6 +35,14 @@ class BackendConnection {
     );
     return response;
   }
+  async get_projects(user_id) {
+    const response = await http_tool.get_request(
+      this.axios_object,
+      `/project/projects?user_id=${user_id}`
+    );
+    console.log(response)
+    return response;
+  }
 }
 const backend_cnx = new BackendConnection();
 

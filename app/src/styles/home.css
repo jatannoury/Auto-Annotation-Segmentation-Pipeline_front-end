@@ -129,6 +129,10 @@
   font-size: 13px;
   cursor: pointer;
 }
+.project:hover{
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+
+}
 .project_info_section {
   width: 30%;
   display: flex;

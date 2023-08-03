@@ -25,7 +25,6 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk("auth/login", async (user, thunkApi) => {
   try {
     let response = await authService.login(user);
-    console.log(response);
     if (response.status !== 200) {
       return thunkApi.rejectWithValue(response.response.data.message);
     }
@@ -62,7 +61,6 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
         state.message = action.payload;
       })
       .addCase(login.pending, (state) => {
@@ -76,7 +74,6 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
         state.message = action.payload;
       });
   },

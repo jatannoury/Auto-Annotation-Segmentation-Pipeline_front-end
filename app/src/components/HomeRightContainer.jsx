@@ -4,10 +4,21 @@ import { AiFillFileAdd } from "react-icons/ai";
 import Project from "./Project";
 import Modal from "../screens/Modal";
 import CreateProject from "./CreateProject";
+import { useSelector, useDispatch } from "react-redux";
+import { get_projects, reset } from "../redux/slicers/projects/projectSlice";
 
+import { toast } from "react-toastify";
+
+import Spinner from "../components/Spinner";
 const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
   const [createProjectClicked, setCreateProjectClicked] = useState(false);
   const [createProjectRequest, setCreateProjectRequest] = useState(false);
+  const { projects, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.projects
+  );
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const toggleCreateBtn = (e) => {
     e.preventDefault();
     console.log(e.target);
@@ -16,46 +27,21 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     }
     setCreateProjectClicked(!createProjectClicked);
   };
-  let dummy_data = [
-    {
-      project_name: "Car Bounder Box",
-      created_at: "17/04/2023 20:00:00",
-      total_images: 100,
-      remaining_images: 90,
-      status: "Pending",
-    },
-    {
-      project_name: "Toy Bounder Box",
-      created_at: "18/05/2023 21:04:00",
-      total_images: 500,
-      remaining_images: 247,
-      status: "Done",
-    },
-    {
-      project_name: "Creme Bounder Box",
-      created_at: "19/05/2023 17:05:08",
-      total_images: 327,
-      remaining_images: 152,
-      status: "Canceled",
-    },
-    {
-      project_name: "House Bounder Box",
-      created_at: "20/06/2023 10:40:15",
-      total_images: 841,
-      remaining_images: 49,
-      status: "Pending",
-    },
-    {
-      project_name: "Laptop Bounder Box",
-      created_at: "21/03/2023 8:27:14",
-      total_images: 998,
-      remaining_images: 555,
-      status: "Done",
-    },
-  ];
   useEffect(() => {
-    
-  }, []);
+    if (isError) {
+      message.map((err) => {
+        toast.error(`${err.loc[1]} ${err.msg}`, {
+          autoClose: 2000,
+        });
+      });
+
+      dispatch(reset());
+    } else if (isSuccess) {
+      dispatch(reset());
+    } else if (isLoading) {
+    }
+  }, [isError, isSuccess]);
+
   return (
     <div className="right_container_root">
       <Modal show={createProjectClicked} handleClose={toggleCreateBtn}>
@@ -87,17 +73,25 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
             </div>
           </div>
           <div className="projects">
-            {dummy_data.map((project) => {
-              return (
-                <Project
-                  project_name={project["project_name"]}
-                  created_at={project["created_at"]}
-                  remaining={project["remaining"]}
-                  total={project["total"]}
-                  status={project["status"]}
-                />
-              );
-            })}
+            {projects !== null && projects.hasOwnProperty("data") ? (
+              projects.data.map((project) => {
+                return (
+                  <Project
+                    project_name={project["projectName"]}
+                    created_at={project["createdAt"]}
+                    remaining={
+                      project.hasOwnProperty("remaining")
+                        ? project["remaining"]
+                        : project["totalNumber"]
+                    }
+                    total={project["totalNumber"]}
+                    status={project["status"]}
+                  />
+                );
+              })
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
