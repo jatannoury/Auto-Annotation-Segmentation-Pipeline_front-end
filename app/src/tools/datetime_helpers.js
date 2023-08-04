@@ -10,4 +10,31 @@ const getCurrentDateTime = () => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
-export default getCurrentDateTime;
+function findOldestAndNewestTimestamps(fileList) {
+    
+  let oldestTimestamp = null;
+  let newestTimestamp = null;
+
+  for (let i = 0; i < fileList.length; i++) {
+    const file = fileList[i];
+
+    const currentTimestamp = file.lastModified;
+
+    if (oldestTimestamp === null || currentTimestamp < oldestTimestamp) {
+      oldestTimestamp = currentTimestamp;
+    }
+
+    if (newestTimestamp === null || currentTimestamp > newestTimestamp) {
+      newestTimestamp = currentTimestamp;
+    }
+  }
+
+  return {
+    oldest: new Date(oldestTimestamp).toISOString(),
+    newest: new Date(newestTimestamp).toISOString(),
+  };
+}
+module.exports = {
+  getCurrentDateTime,
+  findOldestAndNewestTimestamps,
+};

@@ -57,6 +57,14 @@ class BackendConnection {
     );
     return response;
   }
+  async instant_batch_prediction(images) {
+    const response = await http_tool.post_request(
+      this.axios_object,
+      `/ml_models/instant_prediction/batch`,
+      images
+    );
+    return response;
+  }
 }
 const backend_cnx = new BackendConnection();
 

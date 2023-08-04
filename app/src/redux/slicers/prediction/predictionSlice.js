@@ -14,6 +14,25 @@ export const instant_prediction = createAsyncThunk(
   async (image, thunkApi) => {
     try {
       let response = await predictionService.instant_prediction(image);
+      if (response?.status === 201) {
+        console.log(response);
+        return thunkApi.fulfillWithValue(response);
+      } else if (response?.response.status !== 201) {
+        return thunkApi.rejectWithValue(response.response.data.detail);
+      }
+    } catch (error) {
+      const message =
+        (error.response && error.response) || error.message || error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+export const instant_batch_prediction = createAsyncThunk(
+  "prediction/instant_batch_prediction",
+  async (images, thunkApi) => {
+    console.log(images);
+    try {
+      let response = await predictionService.instant_batch_prediction(images);
       console.log("KGVUVIV=============>", response);
 
       if (response?.status === 201) {
@@ -55,6 +74,20 @@ export const predictionSlice = createSlice({
         state.data = action.payload.data.image;
       })
       .addCase(instant_prediction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(instant_batch_prediction.pending, (state, action) => {
+        state.isLoading = true;
+        state.request_name = "instant_batch_prediction";
+      })
+      .addCase(instant_batch_prediction.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.data = action.payload.data.images;
+      })
+      .addCase(instant_batch_prediction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
