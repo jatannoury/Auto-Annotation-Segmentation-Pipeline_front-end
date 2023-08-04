@@ -49,6 +49,14 @@ class BackendConnection {
     );
     return response;
   }
+  async instant_prediction(image) {
+    const response = await http_tool.post_request(
+      this.axios_object,
+      `/ml_models/instant_prediction/single`,
+      image
+    );
+    return response;
+  }
 }
 const backend_cnx = new BackendConnection();
 
