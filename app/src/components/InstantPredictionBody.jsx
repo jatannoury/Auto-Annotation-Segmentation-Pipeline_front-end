@@ -142,6 +142,7 @@ const InstantPredictionBody = ({
       console.log(selectedDir);
       const formData = new FormData();
       console.log(selectedDir.data);
+      
       Object.keys(selectedDir.data).forEach((file, index) => {
         console.log(file);
         formData.append(

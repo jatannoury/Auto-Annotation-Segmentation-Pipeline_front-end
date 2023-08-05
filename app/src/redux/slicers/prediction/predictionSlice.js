@@ -15,7 +15,6 @@ export const instant_prediction = createAsyncThunk(
     try {
       let response = await predictionService.instant_prediction(image);
       if (response?.status === 201) {
-        console.log(response);
         return thunkApi.fulfillWithValue(response);
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
@@ -30,13 +29,10 @@ export const instant_prediction = createAsyncThunk(
 export const instant_batch_prediction = createAsyncThunk(
   "prediction/instant_batch_prediction",
   async (images, thunkApi) => {
-    console.log(images);
     try {
       let response = await predictionService.instant_batch_prediction(images);
-      console.log("KGVUVIV=============>", response);
 
       if (response?.status === 201) {
-        console.log(response);
         return thunkApi.fulfillWithValue(response);
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);

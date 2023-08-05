@@ -1,6 +1,7 @@
 import backend_cnx from "../../../tools/backend_connection";
 
 const create_project = async (formData) => {
+  console.log("ASYNC THUNK");
   const response = await backend_cnx.create_project(formData);
   return response;
 };
@@ -17,6 +18,6 @@ const delete_project = async (project_id) => {
 const authService = {
   create_project,
   get_projects,
-  delete_project
+  delete_project,
 };
 export default authService;

@@ -28,6 +28,7 @@ class BackendConnection {
     return response;
   }
   async create_project(formData) {
+    console.log("TESTTT");
     const response = await http_tool.post_request(
       this.axios_object,
       "/project/create",

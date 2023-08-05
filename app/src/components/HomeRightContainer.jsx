@@ -103,6 +103,7 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
                       total={project["totalNumber"]}
                       status={project["status"]}
                       project_id={project["project_id"]}
+                      storage={project["storageType"]}
                     />
                   );
                 })

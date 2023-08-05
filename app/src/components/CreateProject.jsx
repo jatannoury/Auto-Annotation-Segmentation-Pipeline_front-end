@@ -57,11 +57,14 @@ const CreateProject = ({
     password: "",
     userId: user.userId,
     protect: "",
+    storageType:""
   });
   useEffect(() => {
     if (createProjectRequest === true) {
       setCreateProjectRequest(false);
       set_project(formData);
+      console.log(formData);
+      
       dispatch(create_project(formData));
     }
   }, [createProjectRequest]);
@@ -80,7 +83,7 @@ const CreateProject = ({
             formData={formData}
           />
           <SignUpInput
-            placeholder={"Total Number"}
+            placeholder={"Storage Type"}
             setFormData={setFormData}
             formData={formData}
           />

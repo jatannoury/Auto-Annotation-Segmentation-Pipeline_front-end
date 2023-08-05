@@ -60,20 +60,38 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
             onChange={handleInputChange}
           />
         </div>
-      ) : placeholder === "Gender" || placeholder === "Protect" ? (
+      ) : placeholder === "Gender" ||
+        placeholder === "Protect" ||
+        placeholder === "Storage Type" ? (
         <div className="radio_container">
           <div className="label_radio_conatiner">
             <input
               type="radio"
               id="male"
-              name="gender"
-              value={placeholder === "Gender" ? "male" : true}
+              name={
+                placeholder === "Gender"
+                  ? "gender"
+                  : placeholder === "Storage Type"
+                  ? "upper"
+                  : "lower"
+              }
+              value={
+                placeholder === "Gender"
+                  ? "Male"
+                  : placeholder === "Storage Type"
+                  ? "Cloud"
+                  : "Yes"
+              }
               onChange={handleInputChange}
               className="custom-radio"
             />
             <label htmlFor="male" className="gender_label">
               <p className="gender_p_tag">
-                {placeholder === "Gender" ? "Male" : "Yes"}
+                {placeholder === "Gender"
+                  ? "Male"
+                  : placeholder === "Storage Type"
+                  ? "Cloud"
+                  : "Yes"}
               </p>
             </label>
           </div>
@@ -81,14 +99,30 @@ const SignUpInput = ({ placeholder, setFormData, formData, signIn }) => {
             <input
               type="radio"
               id="female"
-              name="gender"
-              value={placeholder === "Gender" ? "female" : false}
+              name={
+                placeholder === "Gender"
+                  ? "gender"
+                  : placeholder === "Storage Type"
+                  ? "upper"
+                  : "lower"
+              }
+              value={
+                placeholder === "Gender"
+                  ? "Female"
+                  : placeholder === "Storage Type"
+                  ? "Local"
+                  : "No"
+              }
               onChange={handleInputChange}
               className="custom-radio"
             />
             <label htmlFor="female" className="gender_label">
               <p className="gender_p_tag">
-                {placeholder === "Gender" ? "Female" : "No"}
+                {placeholder === "Gender"
+                  ? "Female"
+                  : placeholder === "Storage Type"
+                  ? "Local"
+                  : "No"}
               </p>
             </label>
           </div>

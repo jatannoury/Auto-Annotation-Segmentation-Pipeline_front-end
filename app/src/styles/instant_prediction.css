@@ -121,10 +121,13 @@
   align-items: flex-end;
   color: #705cc9;
 }
+.download_type {
+  flex-grow: 1;
+}
 .right_buttons {
-  width: 15%;
+  width: 10%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .button {
   cursor: pointer;
@@ -221,4 +224,81 @@
   display: flex;
   justify-content: space-between;
   width: 29%;
+}
+.download_options {
+  border: 1px solid #705cc9;
+  height: 48.8%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  background-color: hsl(240, 100%, 96%);
+  border-radius: 5px;
+}
+.options_container {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 80%;
+  right: 2%;
+  cursor: pointer;
+}
+.download_button {
+  position: relative;
+}
+.bottom_option {
+  border-bottom-left-radius: 5px;
+}
+.top_option {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-bottom: 3px;
+}
+.right_left_container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 30%;
+  height: 100%;
+}
+.last_option_container {
+  height: 70%;
+}
+.download_options:hover {
+  box-shadow: 5px 5px 10px rgba(201, 158, 226, 0.5);
+}
+.close_btn {
+  border: 1px solid black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 1400px) {
+  .info {
+    font-size: 13px;
+  }
+  .download_options {
+    font-size: 10px; /* Adjust this value to your desired size for even smaller screens */
+  }
+}
+@media screen and (max-width: 950px) {
+  .info {
+    font-size: 10px;
+  }
+  .download_options {
+    font-size: 7px; /* Adjust this value to your desired size for even smaller screens */
+  }
+}
+@media screen and (max-width: 675px) {
+  .info {
+    font-size: 10px;
+  }
+  .download_options {
+    font-size: 5px; /* Adjust this value to your desired size for even smaller screens */
+  }
 }

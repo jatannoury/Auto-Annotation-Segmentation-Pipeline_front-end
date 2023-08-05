@@ -43,12 +43,17 @@
 }
 .input_component.submit.sign_up .close:hover {
   color: white;
-    box-shadow: 0px 0px 10px rgb(248, 73, 73);
+  box-shadow: 0px 0px 10px rgb(248, 73, 73);
   border: none;
 }
-.input_component.submit.sign_up .submit:hover{
-    background-color: #705cc9;
-    color: white;
-      box-shadow: 0px 0px 30px rgb(201, 158, 226);
-
+.input_component.submit.sign_up .submit:hover {
+  background-color: #705cc9;
+  color: white;
+  box-shadow: 0px 0px 30px rgb(201, 158, 226);
+}
+@media (max-width: 1400px) or (max-height: 700px) {
+  .modal-main {
+    min-height: 60%;
+    max-height: 60%;
+  }
 }

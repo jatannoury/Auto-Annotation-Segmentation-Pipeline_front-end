@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./projectService";
-import getCurrentDateTime from "../../../tools/datetime_helpers";
+import {getCurrentDateTime} from "../../../tools/datetime_helpers";
 const initialState = {
   projects: null,
   project: null,
@@ -13,7 +13,9 @@ const initialState = {
 export const create_project = createAsyncThunk(
   "projects/create_project",
   async (project, thunkApi) => {
+    console.log(project);
     try {
+      console.log(project);
       let response = await authService.create_project(project);
       if (response?.status === 201) {
         return thunkApi.fulfillWithValue("Project Created");
@@ -30,6 +32,7 @@ export const create_project = createAsyncThunk(
 export const get_projects = createAsyncThunk(
   "projects/get_projects",
   async (user_id, thunkApi) => {
+    console.log(user_id);
     try {
       let response = await authService.get_projects(user_id);
       if (response.status === 200) {

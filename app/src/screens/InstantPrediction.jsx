@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
+import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 
 import { MdOutlineClose } from "react-icons/md";
 import { GoDownload } from "react-icons/go";
-import { saveAs } from "file-saver"; // This is a popular library for file downloads
+import { BsFiles, BsFileEarmark } from "react-icons/bs";
+import JSZip from "jszip";
+
+import { saveAs } from "file-saver";
 
 import "../styles/instant_prediction.css";
 import HomeLeftContainer from "../components/HomeLeftContainer";
 import InstantPredictionHeader from "../components/InstantPredictionHeader";
 import InstantPredictionBody from "../components/InstantPredictionBody";
 import InstantPredictionRadioBtns from "../components/InstantPredictionRadioBtns";
+import { toast } from "react-toastify";
 const InstantPrediction = () => {
   const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -20,9 +24,31 @@ const InstantPrediction = () => {
   const [inputType, setInputType] = useState("single");
   const [predictedImages, setPredictedImages] = useState(null);
   const [predictedImagesCounter, setPredictedImagesCounter] = useState(0);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [downloadType, setDownloadType] = useState(`${inputType} - O`);
 
   const burger_menu_handler = () => {
     setBurgerMenuClicked(!burgerMenuClicked);
+  };
+  const handleDownloadBtnHover = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    const { clientX, clientY } = event;
+    const { left, top, width, height } = rect;
+    const x = clientX - left;
+    const y = clientY - top;
+
+    const xDistance = Math.abs(x - width / 2);
+    const yDistance = Math.abs(y - height / 2);
+
+    let direction;
+    if (xDistance > yDistance) {
+      direction = x > width / 2 ? "right" : "left";
+    } else {
+      direction = y > height / 2 ? "bottom" : "top";
+    }
+    if (direction !== "left") {
+      handleHideDropDown();
+    }
   };
   const handleNextImage = (e) => {
     if (predictedImagesCounter === predictedImages.length - 1) {
@@ -30,6 +56,23 @@ const InstantPrediction = () => {
     }
     setPredictedImagesCounter(predictedImagesCounter + 1);
   };
+  const handleChangeDownloadType = (e) => {
+    handleHideDropDown();
+    if (e.target.className === "download_options top_option") {
+      setDownloadType(`${inputType} - IO`);
+    }
+    if (e.target.className === "download_options bottom_option") {
+      setDownloadType(`${inputType} - O`);
+    }
+  };
+  const handleShowDropDown = () => {
+    setShowDropDown(true);
+  };
+
+  const handleHideDropDown = () => {
+    setShowDropDown(false);
+  };
+
   const handlePrevImage = (e) => {
     if (predictedImagesCounter === 0) {
       return;
@@ -43,12 +86,101 @@ const InstantPrediction = () => {
     setSelectedDir(null);
     setPredictedImages(null);
     document.getElementById("fileInput").value = "";
+    setPredictedImagesCounter(0);
   };
   const close_output_image = () => {
     setPredictedImage(null);
   };
-  const downloadPrediction = () => {
-    saveAs(predictedImage, "image.jpg");
+  const downloadPrediction = async () => {
+    if (inputType === "single") {
+      if (rawImage === null) {
+        toast.error("Please input an image", {
+          autoClose: 3000,
+        });
+        return;
+      }
+      if (downloadType.includes("- O") && inputType === "single") {
+        saveAs(predictedImage, "image.jpg");
+      }
+      if (downloadType.includes("- IO") && inputType === "single") {
+        const zip = new JSZip();
+
+        const file1Name = "selected_image.jpg";
+        const file2Name = "predicted_image.jpg";
+
+        const file1Data = atob(
+          selectedImage.replace("data:image/jpeg;base64,", "")
+        );
+        const file2Data = atob(
+          predictedImage.replace("data:image/jpeg;base64,", "")
+        );
+
+        zip.file(file1Name, file1Data, { binary: true });
+        zip.file(file2Name, file2Data, { binary: true });
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+
+        saveAs(zipBlob, "random_files.zip");
+      }
+    }
+    if (inputType === "batch") {
+      if (downloadType.includes("- O") && inputType === "batch") {
+        const zip = new JSZip();
+        predictedImages.map(async (predicted_img, index) => {
+          const fileName = `predicted_image_${index}.jpg`;
+          const fileData = atob(
+            predicted_img.replace("data:image/jpeg;base64,", "")
+          );
+          zip.file(fileName, fileData, { binary: true });
+        });
+        await zip.generateAsync({ type: "blob" }).then((res) => {
+          saveAs(res, `${downloadType.replace(" - O", "_Output_Only")}.zip`);
+        });
+      }
+      if (downloadType.includes("- IO") && inputType === "batch") {
+        const zip = new JSZip();
+        let encoded_data = [];
+
+        const readFileAsync = (file) => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        };
+
+        const processData = async () => {
+          for (const element of Object.keys(selectedDir.data)) {
+            try {
+              const data = await readFileAsync(selectedDir.data[element]);
+              encoded_data.push(data);
+            } catch (error) {
+              console.error("Error reading file:", error);
+            }
+          }
+          predictedImages.map(async (predicted_img, index) => {
+            try {
+              const predictedFileName = `predicted_image_${index}.jpg`;
+              const selectedFileName = `selected_image_${index}.jpg`;
+              const predictedFileData = atob(
+                predicted_img.replace("data:image/jpeg;base64,", "")
+              );
+              const selectedFileData = atob(
+                encoded_data[index].replace("data:image/jpeg;base64,", "")
+              );
+              zip.file(predictedFileName, predictedFileData, { binary: true });
+              zip.file(selectedFileName, selectedFileData, { binary: true });
+            } catch (e) {}
+          });
+          await zip.generateAsync({ type: "blob" }).then((res) => {
+            saveAs(res, `${downloadType}.zip`);
+          });
+        };
+
+        processData();
+      }
+    }
   };
   return (
     <div className="main_container">
@@ -93,12 +225,45 @@ const InstantPrediction = () => {
                 </div>
               </div>
               <div className="button_container">
-                <div className="right_buttons">
+                <div className="download_type">
+                  {downloadType.includes("O") &&
+                  downloadType.includes("IO") === false ? (
+                    <BsFileEarmark />
+                  ) : (
+                    downloadType.includes("IO") && <BsFiles />
+                  )}
+                </div>
+                <div className="right_left_container">
+                  {showDropDown === true && (
+                    <div className="options_container">
+                      <div
+                        className="last_option_container"
+                        onMouseLeave={handleHideDropDown}
+                      >
+                        <div
+                          className="download_options top_option"
+                          onClick={handleChangeDownloadType}
+                        >
+                          Input/Output
+                        </div>
+                        <div
+                          className="download_options bottom_option"
+                          onClick={handleChangeDownloadType}
+                        >
+                          Only Output
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <GoDownload
                     size={20}
-                    className="button"
+                    className="button download_button"
                     onClick={downloadPrediction}
+                    onMouseEnter={handleShowDropDown}
+                    onMouseLeave={handleDownloadBtnHover}
                   />
+                </div>
+                <div className="right_buttons">
                   <MdOutlineClose
                     size={20}
                     className="button"
@@ -131,14 +296,14 @@ const InstantPrediction = () => {
                 <div className="btns_container">
                   {predictedImagesCounter > 0 ? (
                     <div className="next_btn" onClick={handlePrevImage}>
-                      <BiSkipPrevious size={50} />
+                      <BsArrowLeft size={40} />
                     </div>
                   ) : (
                     <div></div>
                   )}
                   {predictedImagesCounter < predictedImages.length - 1 ? (
                     <div className="next_btn" onClick={handleNextImage}>
-                      <BiSkipNext size={50} />
+                      <BsArrowRight size={40} />
                     </div>
                   ) : (
                     <div></div>

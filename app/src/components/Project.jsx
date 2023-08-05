@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { MdPending } from "react-icons/md";
+import { BsFillCloudyFill, BsServer } from "react-icons/bs";
 import { FaTrashAlt, FaHandPointRight } from "react-icons/fa";
 import PointerContainer from "./PointerContainer";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +19,7 @@ const Project = ({
   remaining,
   total,
   status,
+  storage,
 }) => {
   const dispatch = useDispatch();
 
@@ -53,13 +55,25 @@ const Project = ({
           <div>Created at: {created_at}</div>
         </div>
         <div className="project_info_section">
-          <div>Remaining Images: {remaining} Images</div>
-          <div>Total Images: {total} Images</div>
+          <div>Remaining Images: {remaining ? remaining : 0} Images</div>
+          <div>Total Images: {total ? total : 0} Images</div>
         </div>
-        <div className="project_info_section status">
-          <div className="status_p_tag">Status: {status} </div>
-          <div style={{ color: status_color_mapping[status] }}>
-            <MdPending />
+        <div className="project_info_section">
+          <div className="status">
+            <div className="status_p_tag">Status: {status} </div>
+            <div style={{ color: status_color_mapping[status] }}>
+              <div className="status_icon">
+                <MdPending />
+              </div>
+            </div>
+          </div>
+          <div className="status">
+            <div className="status_p_tag">Storage: {storage} </div>
+            <div style={{ color: status_color_mapping[status] }}>
+              <div className="storage_icon">
+                {storage === "Cloud" ? <BsFillCloudyFill /> : <BsServer />}
+              </div>
+            </div>
           </div>
         </div>
         <div className={`delte_icon ${projectId}`}>

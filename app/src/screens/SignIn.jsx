@@ -31,7 +31,6 @@ const SignIn = () => {
       });
       dispatch(reset());
     } else if (isSuccess) {
-      console.log(user);
       toast.success("Logged In", {
         autoClose: 1000,
       });
