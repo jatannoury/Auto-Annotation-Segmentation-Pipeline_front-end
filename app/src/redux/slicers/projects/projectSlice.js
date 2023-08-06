@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./projectService";
-import {getCurrentDateTime} from "../../../tools/datetime_helpers";
+import { getCurrentDateTime } from "../../../tools/datetime_helpers";
+const storedProjects = JSON.parse(localStorage.getItem("projects"));
+
 const initialState = {
-  projects: null,
+  projects: storedProjects || null,
   project: null,
   isError: false,
   isSuccess: false,
@@ -13,9 +15,7 @@ const initialState = {
 export const create_project = createAsyncThunk(
   "projects/create_project",
   async (project, thunkApi) => {
-    console.log(project);
     try {
-      console.log(project);
       let response = await authService.create_project(project);
       if (response?.status === 201) {
         return thunkApi.fulfillWithValue("Project Created");
@@ -32,7 +32,6 @@ export const create_project = createAsyncThunk(
 export const get_projects = createAsyncThunk(
   "projects/get_projects",
   async (user_id, thunkApi) => {
-    console.log(user_id);
     try {
       let response = await authService.get_projects(user_id);
       if (response.status === 200) {
@@ -111,6 +110,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoading = false;
         state.projects = action.payload.data;
+        localStorage.setItem("projects", JSON.stringify(action.payload.data));
       })
       .addCase(get_projects.rejected, (state, action) => {
         state.isLoading = false;

@@ -126,6 +126,7 @@ const InstantPrediction = () => {
     if (inputType === "batch") {
       if (downloadType.includes("- O") && inputType === "batch") {
         const zip = new JSZip();
+
         predictedImages.map(async (predicted_img, index) => {
           const fileName = `predicted_image_${index}.jpg`;
           const fileData = atob(
@@ -159,20 +160,29 @@ const InstantPrediction = () => {
               console.error("Error reading file:", error);
             }
           }
-          predictedImages.map(async (predicted_img, index) => {
-            try {
-              const predictedFileName = `predicted_image_${index}.jpg`;
-              const selectedFileName = `selected_image_${index}.jpg`;
-              const predictedFileData = atob(
-                predicted_img.replace("data:image/jpeg;base64,", "")
-              );
-              const selectedFileData = atob(
-                encoded_data[index].replace("data:image/jpeg;base64,", "")
-              );
-              zip.file(predictedFileName, predictedFileData, { binary: true });
-              zip.file(selectedFileName, selectedFileData, { binary: true });
-            } catch (e) {}
-          });
+
+          // Use Promise.all to wait for all promises to resolve
+          await Promise.all(
+            predictedImages.map(async (predicted_img, index) => {
+              try {
+                const predictedFileName = `predicted_image_${index}.jpg`;
+                const selectedFileName = `selected_image_${index}.jpg`;
+                const predictedFileData = atob(
+                  predicted_img.split("base64,")[1]
+                );
+                const selectedFileData = atob(
+                  encoded_data[index].split("base64,")[1]
+                );
+                zip.file(predictedFileName, predictedFileData, {
+                  binary: true,
+                });
+                zip.file(selectedFileName, selectedFileData, { binary: true });
+              } catch (e) {
+                console.error("Error adding files to zip:", e);
+              }
+            })
+          );
+
           await zip.generateAsync({ type: "blob" }).then((res) => {
             saveAs(res, `${downloadType}.zip`);
           });

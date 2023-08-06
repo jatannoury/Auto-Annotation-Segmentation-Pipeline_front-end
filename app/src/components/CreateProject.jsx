@@ -63,7 +63,6 @@ const CreateProject = ({
     if (createProjectRequest === true) {
       setCreateProjectRequest(false);
       set_project(formData);
-      console.log(formData);
       
       dispatch(create_project(formData));
     }

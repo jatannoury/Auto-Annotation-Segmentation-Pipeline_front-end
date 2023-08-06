@@ -11,6 +11,7 @@ import {
   empty_request_name,
 } from "../redux/slicers/projects/projectSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Project = ({
   project_name,
@@ -22,7 +23,7 @@ const Project = ({
   storage,
 }) => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [projectId, setProjectId] = useState(project_id);
   const delete_project_by_id = (e) => {
@@ -39,6 +40,9 @@ const Project = ({
   const hide_pointer = (e) => {
     setIsHovered(false);
   };
+  const handleNavigate = () => {
+    navigate(`/Project/${projectId}`);
+  };
   return (
     <div className="project_container">
       <PointerContainer isHovered={isHovered} />
@@ -46,6 +50,7 @@ const Project = ({
         className="project"
         onMouseEnter={show_pointer}
         onMouseLeave={hide_pointer}
+        onClick={handleNavigate}
       >
         <div className="project_icon">
           <AiOutlineFundProjectionScreen size={30} />

@@ -96,7 +96,6 @@ const InstantPredictionBody = ({
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setRawImage(file);
-    console.log(event.target.files[0]);
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -109,18 +108,12 @@ const InstantPredictionBody = ({
   };
   const handleDirChange = (event) => {
     const files = event.target.files;
-    const oldest_and_newest = setSelectedDir({
+    setSelectedDir({
       nb_of_files: event.target.files.length,
       ...findOldestAndNewestTimestamps(files),
       "total_size(MB)": getTotalFileSize(files),
       "total_size(GB)": (getTotalFileSize(files) / 1024).toFixed(5),
       data: files,
-    });
-    console.log({
-      nb_of_files: event.target.files.length,
-      ...findOldestAndNewestTimestamps(files),
-      "total_size(MB)": getTotalFileSize(files),
-      "total_size(GB)": (getTotalFileSize(files) / 1024).toFixed(5),
     });
   };
 
@@ -139,12 +132,9 @@ const InstantPredictionBody = ({
     }
     animate_btn();
     if (selectedDir !== null && rawImage === null) {
-      console.log(selectedDir);
       const formData = new FormData();
-      console.log(selectedDir.data);
-      
+
       Object.keys(selectedDir.data).forEach((file, index) => {
-        console.log(file);
         formData.append(
           `file_uploads`,
           selectedDir.data[file],

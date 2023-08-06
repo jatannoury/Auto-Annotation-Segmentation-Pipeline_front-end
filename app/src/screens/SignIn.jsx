@@ -43,7 +43,6 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(login(formData));
     // const response = await backend_cnx.sign_in(formData);
-    // console.log(response);
     // if (response?.status === 200) {
     //   toast.success("Logged In", {
     //     autoClose: 1000,
