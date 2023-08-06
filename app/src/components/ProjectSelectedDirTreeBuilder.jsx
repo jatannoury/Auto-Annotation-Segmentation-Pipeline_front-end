@@ -1,7 +1,7 @@
 import React from "react";
 import { BiSolidImage, BiSolidFolder } from "react-icons/bi";
-import { AiFillCaretRight } from "react-icons/ai";
 import { file_dir_sort } from "../tools/file_helpers";
+import ProjectDirContainer from "./ProjectDirContainer";
 const ProjectSelectedDirTreeBuilder = ({ selectedDirTree }) => {
   return (
     <>
@@ -57,18 +57,10 @@ const ProjectSelectedDirTreeBuilder = ({ selectedDirTree }) => {
             );
           } else {
             return (
-              <div className="path_container">
-                <div className="info_section ">
-                  <div className="card_animation">
-                    <AiFillCaretRight style={{ cursor: "pointer" }} />
-
-                    <BiSolidFolder size={30} />
-                    <div className="image_name_spacer"></div>
-                    <p>{element}</p>
-                  </div>
-                </div>
-                <div className="card_decorator"></div>
-              </div>
+              <ProjectDirContainer
+                element={element}
+                selectedDirTree={selectedDirTree}
+              />
             );
           }
           // console.log(typeof selectedDirTree[element]);

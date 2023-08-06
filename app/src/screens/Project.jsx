@@ -138,6 +138,7 @@ const Project = () => {
                           <div className="project_body_container">
                             <ProjectSelectedDirTreeBuilder
                               selectedDirTree={selectedDirTree}
+                              
                             />
                           </div>
                         )}
