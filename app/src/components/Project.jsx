@@ -27,7 +27,9 @@ const Project = ({
   const [isHovered, setIsHovered] = useState(false);
   const [projectId, setProjectId] = useState(project_id);
   const delete_project_by_id = (e) => {
-    dispatch(delete_project(projectId));
+    if (e.target instanceof SVGElement) {
+      dispatch(delete_project(projectId));
+    }
   };
   let status_color_mapping = {
     Pending: "rgb(247, 151, 116)",
@@ -40,8 +42,12 @@ const Project = ({
   const hide_pointer = (e) => {
     setIsHovered(false);
   };
-  const handleNavigate = () => {
-    navigate(`/Project/${projectId}`);
+  const handleNavigate = (e) => {
+    console.log(e.target instanceof SVGElement);
+    if (e.target instanceof SVGElement) {
+    } else {
+      navigate(`/Project/${projectId}`);
+    }
   };
   return (
     <div className="project_container">
@@ -56,7 +62,7 @@ const Project = ({
           <AiOutlineFundProjectionScreen size={30} />
         </div>
         <div className="project_info_section">
-          <div>Project Name: {project_name}</div>
+          <div>Name: {project_name}</div>
           <div>Created at: {created_at}</div>
         </div>
         <div className="project_info_section">

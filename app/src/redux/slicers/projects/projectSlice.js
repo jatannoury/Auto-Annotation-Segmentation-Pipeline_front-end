@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./projectService";
+import projectService from "./projectService";
 import { getCurrentDateTime } from "../../../tools/datetime_helpers";
 const storedProjects = JSON.parse(localStorage.getItem("projects"));
 
@@ -9,16 +9,34 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: null,
   request_name: "",
 };
 export const create_project = createAsyncThunk(
   "projects/create_project",
   async (project, thunkApi) => {
     try {
-      let response = await authService.create_project(project);
+      let response = await projectService.create_project(project);
       if (response?.status === 201) {
         return thunkApi.fulfillWithValue("Project Created");
+      } else if (response?.response.status !== 201) {
+        return thunkApi.rejectWithValue(response.response.data.detail);
+      }
+    } catch (error) {
+      const message =
+        (error.response && error.response) || error.message || error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+export const start_project = createAsyncThunk(
+  "projects/start_project",
+  async (project, thunkApi) => {
+    try {
+      let response = await projectService.start_project(project);
+      console.log(response);
+      if (response?.status === 201) {
+        return thunkApi.fulfillWithValue("Project Started");
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
       }
@@ -33,7 +51,7 @@ export const get_projects = createAsyncThunk(
   "projects/get_projects",
   async (user_id, thunkApi) => {
     try {
-      let response = await authService.get_projects(user_id);
+      let response = await projectService.get_projects(user_id);
       if (response.status === 200) {
         return response;
       } else if (response?.response.status !== 201) {
@@ -51,7 +69,7 @@ export const delete_project = createAsyncThunk(
   "projects/delete_project",
   async (project_id, thunkApi) => {
     try {
-      let response = await authService.delete_project(project_id);
+      let response = await projectService.delete_project(project_id);
       if (response.status === 200) {
         return response;
       } else if (response?.response.status !== 201) {
@@ -65,7 +83,7 @@ export const delete_project = createAsyncThunk(
   }
 );
 
-export const authSlice = createSlice({
+export const projectSlice = createSlice({
   name: "projects",
   initialState,
   reducers: {
@@ -73,7 +91,7 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.isLoading = false;
-      state.message = "";
+      state.message = null;
     },
     empty_request_name: (state) => {
       state.request_name = "";
@@ -98,6 +116,21 @@ export const authSlice = createSlice({
         state.project = "";
       })
       .addCase(create_project.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(start_project.pending, (state, action) => {
+        state.isLoading = true;
+        state.request_name = "start_project";
+        // state.project = action.meta.arg;
+      })
+      .addCase(start_project.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+      })
+      .addCase(start_project.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
@@ -139,5 +172,5 @@ export const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
-export const { reset, empty_request_name, set_project } = authSlice.actions;
+export default projectSlice.reducer;
+export const { reset, empty_request_name, set_project } = projectSlice.actions;

@@ -14,7 +14,6 @@ const ProjectDirContainer = ({ element, selectedDirTree }) => {
     const curr_dir_name =
       e.currentTarget.nextSibling.nextSibling.nextSibling.textContent;
     let curr_dir_content = null;
-    console.log(curr_dir_name);
 
     const stack = [];
     stack.push({ obj: selectedDirTree, parentKey: "" });

@@ -63,10 +63,12 @@
 .user_info {
   display: flex;
   flex-direction: row;
+  font-size: 0.8rem;
   align-items: center;
   gap: 5%;
   color: #e2e0e0;
   padding: 0% 5%;
+  /* min-width: 250px; */
 }
 .sections {
   flex-grow: 1;
@@ -86,6 +88,7 @@
   color: #e2e0e0;
   padding-left: 5%;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 .section:hover {
   background-color: rgba(112, 92, 201, 0.4);
@@ -99,6 +102,7 @@
 .right_container_root {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 .right_container_main {
   display: flex;
@@ -121,7 +125,7 @@
 .project {
   border: 1px solid #705cc9;
   width: 70%;
-  height: 100%;
+  height: 70%;
   border-radius: 15px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -131,6 +135,7 @@
   color: #705cc9;
   font-size: 13px;
   cursor: pointer;
+  min-width: 700px;
 }
 .project:hover {
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
@@ -138,14 +143,17 @@
 .project_info_section {
   width: 30%;
   display: flex;
+  height: 50%;
   flex-direction: column;
 }
 
 .project_info_section div {
   margin: 0;
-  height: 50%;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
+  /* font-size: 1.2em; */
+  font-weight: 500;
 }
 .project_icon {
   margin-left: 2%;
@@ -153,14 +161,14 @@
 .status {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  /* justify-content: space-around; */
   align-items: center;
 }
 .status_icon {
   flex-grow: 1;
 }
 .project_info_section .status_p_tag {
-  width: 35%;
+  width: 50%;
   margin-bottom: 5px;
 }
 
@@ -193,11 +201,11 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 .project_container {
-  height: 10%;
+  height: 20%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 3%;
+  /* margin-top: 3%; */
 }
 .pointer_container {
   display: none;

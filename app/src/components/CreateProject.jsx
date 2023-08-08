@@ -57,13 +57,13 @@ const CreateProject = ({
     password: "",
     userId: user.userId,
     protect: "",
-    storageType:""
+    storageType: "",
   });
   useEffect(() => {
     if (createProjectRequest === true) {
       setCreateProjectRequest(false);
       set_project(formData);
-      
+
       dispatch(create_project(formData));
     }
   }, [createProjectRequest]);
@@ -73,9 +73,9 @@ const CreateProject = ({
 
   return (
     <div style={{ "margin-top": "5%" }}>
-      <form className="form_inputs">
+      <form className="form_inputs create_project_modal">
         <SignUpHeader placeholder={"Create New Project"} />
-        <div className="row">
+        <div className="row create_modal">
           <SignUpInput
             placeholder={"Project Name"}
             setFormData={setFormData}
@@ -87,7 +87,7 @@ const CreateProject = ({
             formData={formData}
           />
         </div>
-        <div className="row">
+        <div className="row create_modal">
           <SignUpInput
             placeholder={"Password"}
             setFormData={setFormData}
@@ -101,14 +101,14 @@ const CreateProject = ({
         </div>
 
         <div className="submit_row">
-          <div className="input_component submit sign_up">
+          <div className="input_component submit">
             <input
               type="submit"
               className="submit"
               onClick={toggleCreateBtn}
             ></input>
           </div>
-          <div className="input_component submit sign_up">
+          <div className="input_component submit">
             <input
               type="submit"
               className="close"

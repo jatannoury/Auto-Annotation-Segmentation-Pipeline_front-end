@@ -15,16 +15,6 @@ const Home = () => {
   const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(get_projects(user.userId));
-    // dispatch();
-    // create_project({
-    //   projectName: "Josephtannoury@outlook.com",
-    //   totalNumber: 0,
-    //   password: "22Q1D99Z",
-    //   userId: "83f003ef-849f-43b5-bc85-191528e46492",
-    //   protect: "Yes",
-    //   storageType: "Cloud",
-    //   status: "Pending",
-    // })
   }, []);
   const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
 

@@ -57,7 +57,7 @@ const SignIn = () => {
     // }
   };
   return (
-    <div className="signup_container">
+    <div className="signup_container sign_in_container">
       <form className="form_inputs" onSubmit={handleSubmit}>
         <SignUpHeader placeholder={"Sign In"} />
 

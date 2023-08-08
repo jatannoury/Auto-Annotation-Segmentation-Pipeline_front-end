@@ -30,6 +30,13 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     setCreateProjectClicked(!createProjectClicked);
   };
   useEffect(() => {
+    console.log(
+      "FROM USE EFFECT",
+      message === null,
+      isError,
+
+      isSuccess
+    );
     if (request_name != "delete_project") {
       return;
     }
@@ -38,15 +45,17 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
         toast.error(`${err.loc[1]} ${err.msg}`, {
           autoClose: 2000,
         });
+        dispatch(reset());
       });
-    } else if (isSuccess) {
+    } else if (isSuccess && message !== null) {
       toast.success("Project Deleted", {
         autoClose: 1000,
       });
+      dispatch(reset());
     } else if (isLoading) {
     }
-    dispatch(reset());
     // dispatch(empty_request_name());
+    dispatch(reset());
   }, [isError, isSuccess, message]);
 
   return (

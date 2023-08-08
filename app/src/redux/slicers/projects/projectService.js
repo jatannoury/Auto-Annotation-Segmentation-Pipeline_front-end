@@ -13,10 +13,15 @@ const delete_project = async (project_id) => {
   const response = await backend_cnx.delete_project(project_id);
   return response;
 };
+const start_project = async (project_info) => {
+  const response = await backend_cnx.start_project(project_info);
+  return response;
+};
 
-const authService = {
+const projectService = {
   create_project,
   get_projects,
   delete_project,
+  start_project,
 };
-export default authService;
+export default projectService;

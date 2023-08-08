@@ -17,6 +17,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 
 .display-block {
@@ -32,21 +33,26 @@
   flex-direction: row;
   justify-content: space-between;
   padding-left: 10%;
+  margin-top: 5%;
 }
 .input_component.submit.sign_up {
   padding-left: 0%;
   width: 45%;
 }
-.input_component.submit.sign_up .close {
+.input_component.submit .close {
   background-color: rgb(248, 73, 73);
   border: none;
 }
-.input_component.submit.sign_up .close:hover {
+.input_component.submit .close:hover {
   color: white;
   box-shadow: 0px 0px 10px rgb(248, 73, 73);
   border: none;
 }
-.input_component.submit.sign_up .submit:hover {
+.create_modal {
+  margin-top: 5%;
+}
+
+.input_component.submit .submit:hover {
   background-color: #705cc9;
   color: white;
   box-shadow: 0px 0px 30px rgb(201, 158, 226);

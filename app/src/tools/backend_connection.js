@@ -49,6 +49,14 @@ class BackendConnection {
     );
     return response;
   }
+  async start_project(project_info) {
+    const response = await http_tool.post_request(
+      this.axios_object,
+      `/project/start-project`,
+      project_info
+    );
+    return response;
+  }
   async instant_prediction(image) {
     const response = await http_tool.post_request(
       this.axios_object,
