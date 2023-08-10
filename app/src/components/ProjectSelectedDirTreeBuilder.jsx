@@ -63,7 +63,6 @@ const ProjectSelectedDirTreeBuilder = ({ selectedDirTree }) => {
                 />
               );
             }
-            // console.log(typeof selectedDirTree[element]);
           })}
     </>
   );

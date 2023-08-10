@@ -34,7 +34,6 @@ export const start_project = createAsyncThunk(
   async (project, thunkApi) => {
     try {
       let response = await projectService.start_project(project);
-      console.log(response);
       if (response?.status === 201) {
         return thunkApi.fulfillWithValue("Project Started");
       } else if (response?.response.status !== 201) {
@@ -92,6 +91,7 @@ export const projectSlice = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.message = null;
+      state.request_name=""
     },
     empty_request_name: (state) => {
       state.request_name = "";

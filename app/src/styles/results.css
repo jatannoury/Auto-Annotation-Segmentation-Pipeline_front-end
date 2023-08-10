@@ -1,0 +1,103 @@
+.project_right_main_container {
+  background-image: linear-gradient(to bottom, #f8eefa, #705cc9);
+}
+.results_main_container {
+  /* background-color: #e0e0e0; */
+
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  /* overflow: auto; */
+}
+.results_viewer {
+  /* border: 1px solid black; */
+  width: 97%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.result_row {
+  /* border: 1px solid black; */
+  width: 40%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.image {
+  /* border: 1px solid black; */
+  width: 45%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image_left {
+  border: 3px solid #705cc9;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.image_right {
+  border: 3px solid #705cc9;
+  border-left: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.return_to_info {
+  width: 2%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #705cc9;
+  color: #e0e0e0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.return_to_info:hover {
+  background-color: rgb(28, 156, 28);
+  box-shadow: 5px 5px 10px rgb(28, 156, 28);
+}
+.return_to_view {
+  /* border: 1px solid black; */
+  width: 97%;
+  min-height: 30px;
+  margin-top: 5px;
+  padding-left: 1%;
+}
+.image_name {
+  flex: 1; /* Let the container grow and shrink as needed */
+  min-width: 0; /* Allow the container to shrink even if content overflows */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  color: #e0e0e0;
+  font-weight: 600;
+  border: 3px solid #705cc9;
+  background-color: #705cc9;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-top: 1%;
+  padding: 0.5%;
+}
+
+.name {
+  font-family: Outfit, sans-serif;
+}

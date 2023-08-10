@@ -43,7 +43,6 @@ const Project = ({
     setIsHovered(false);
   };
   const handleNavigate = (e) => {
-    console.log(e.target instanceof SVGElement);
     if (e.target instanceof SVGElement) {
     } else {
       navigate(`/Project/${projectId}`);
@@ -88,7 +87,7 @@ const Project = ({
           </div>
         </div>
         <div className={`delte_icon ${projectId}`}>
-          <FaTrashAlt onClick={delete_project_by_id} />
+          <FaTrashAlt onClick={delete_project_by_id} size={20} />
         </div>
       </div>
     </div>

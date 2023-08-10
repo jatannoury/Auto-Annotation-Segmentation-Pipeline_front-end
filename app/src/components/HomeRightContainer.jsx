@@ -30,13 +30,6 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     setCreateProjectClicked(!createProjectClicked);
   };
   useEffect(() => {
-    console.log(
-      "FROM USE EFFECT",
-      message === null,
-      isError,
-
-      isSuccess
-    );
     if (request_name != "delete_project") {
       return;
     }

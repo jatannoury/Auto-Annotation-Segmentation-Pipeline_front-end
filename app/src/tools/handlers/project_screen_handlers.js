@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { start_project } from "../../redux/slicers/projects/projectSlice";
-import s3_controller from "../../tools/aws_controller";
-import { useDispatch } from "react-redux";
+import s3_controller from "../../tools/s3_controller";
 
 const handleRequestInfo = (selectedDir, projectInfo, user) => {
   let data = {
@@ -19,14 +17,10 @@ const handleRequestInfo = (selectedDir, projectInfo, user) => {
       : uuidv4().toString();
   Object.keys(data.data).forEach((file, index) => {
     file = data.data[file];
-    console.log(
+
+    s3_controller.post_object(
+      file,
       `${user.userId}/${data["project_name"]}/${file.webkitRelativePath}`
-    );
-    console.log(
-      s3_controller.post_object(
-        file,
-        `${user.userId}/${data["project_name"]}/${file.webkitRelativePath}`
-      )
     );
   });
   delete data["total_size(GB)"];
@@ -34,8 +28,7 @@ const handleRequestInfo = (selectedDir, projectInfo, user) => {
   delete data["data"];
   delete data["password"];
 
-  console.log(data);
-  return data
+  return data;
 };
 
 export default handleRequestInfo;

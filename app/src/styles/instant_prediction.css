@@ -34,7 +34,7 @@
   align-items: flex-start;
 }
 .placeholder {
-  border: 1px solid #705cc9;
+  border: 3px solid #705cc9;
   box-shadow: 5px 5px 10px rgba(201, 158, 226, 0.5);
 
   border-radius: 8px;
@@ -127,7 +127,7 @@
 .right_buttons {
   width: 10%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .button {
   cursor: pointer;
@@ -156,10 +156,10 @@
   justify-content: space-between;
 }
 .checkbox {
-  border: 1px solid #705cc9;
-  border-radius: 2px;
-  height: 10px;
-  width: 10px;
+  border: 3px solid #705cc9;
+  border-radius: 5px;
+  height: 15px;
+  width: 15px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -180,6 +180,8 @@
 .type {
   display: flex;
   align-items: center;
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 .sleected_dir_info {
   height: 80%;

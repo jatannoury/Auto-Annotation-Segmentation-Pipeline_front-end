@@ -1,0 +1,106 @@
+.in_progress_main_container {
+  /* border: 1px solid black; */
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.progress_info_row {
+  width: 92.5%;
+  height: 50%;
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info_conatiner {
+  height: 80%;
+  width: 30%;
+  /* border: 2px solid #705cc9; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info_header {
+  height: 10%;
+  color: #583dcc;
+  font-weight: 500;
+  font-family: Outfit, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+.info {
+  border: 2px solid #705cc9;
+  border-radius: 10px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text_info {
+  color: white;
+  font-weight: 700;
+  font-size: 2.5em;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.elapsed_time_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  color: white;
+}
+.elapsed_time_card:nth-child(1) {
+  text-align: end;
+}
+.time_elapsed_description {
+  color: white;
+  font-size: 0.3em;
+}
+.nb_imgs_info {
+  font-size: 3em;
+  color: white;
+}
+.view_prediction {
+  width: 98%;
+  height: 5%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.view_prediction_btn {
+  border: 1px solid black;
+  width: 8%;
+  background-color: #705cc9;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  height: 80%;
+  border: none;
+  cursor: pointer;
+}
+.view_prediction_btn:hover {
+  background-color: rgb(28, 156, 28);
+  box-shadow: 5px 5px 10px rgb(28, 156, 28);
+}
+.pending_state {
+  cursor: not-allowed;
+}
+.pending_state:hover {
+  cursor: not-allowed;
+  background-color: #705cc9;
+  box-shadow: none;
+}

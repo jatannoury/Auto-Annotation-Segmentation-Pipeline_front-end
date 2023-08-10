@@ -238,9 +238,9 @@ const InstantPrediction = () => {
                 <div className="download_type">
                   {downloadType.includes("O") &&
                   downloadType.includes("IO") === false ? (
-                    <BsFileEarmark />
+                    <BsFileEarmark size={20} />
                   ) : (
-                    downloadType.includes("IO") && <BsFiles />
+                    downloadType.includes("IO") && <BsFiles size={20} />
                   )}
                 </div>
                 <div className="right_left_container">

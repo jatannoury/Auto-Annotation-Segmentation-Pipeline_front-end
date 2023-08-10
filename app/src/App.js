@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./screens/Home";
 import InstantPrediction from "./screens/InstantPrediction";
 import Project from "./screens/Project";
+import ProjectResults from "./components/ProjectResults";
 function App() {
   return (
     <>
