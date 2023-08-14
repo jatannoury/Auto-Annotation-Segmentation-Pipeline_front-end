@@ -7,6 +7,7 @@
   align-items: center;
   margin-top: 0;
 }
+
 .project_main_container {
   /* border: 1px solid black; */
   width: 100%;
@@ -31,6 +32,7 @@
   display: flex;
   flex-direction: column;
   min-width: 650px;
+  background-color: #e0e0e0;
 }
 .project_info_container {
   /* border: 5px solid blue; */
@@ -187,14 +189,14 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: #ffffff;
+  color: #705cc9;
 }
 
 .hidden_file_input {
   display: none;
 }
 .path_container {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #705cc9;
   margin-bottom: 0.5%;
   border-radius: 10px;
   /* min-height: 12%; */
@@ -254,7 +256,7 @@
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
   border: none;
-  background-color: #e0e0e0;
+  background-color: #705cc9;
   min-height: 100%;
   width: 3%;
 }
@@ -334,10 +336,72 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .submit_btn:hover {
   background-color: rgb(28, 156, 28);
   box-shadow: 5px 5px 10px rgb(28, 156, 28);
+}
+.wrong_s3_input {
+  border-color: rgb(242, 101, 101);
+  color: rgb(242, 101, 101);
+}
+.info_container .wrong_s3_input_info {
+  background-color: rgb(242, 101, 101);
+}
+.info_text.wrong_s3_input_info::before {
+  border-color: transparent transparent rgb(242, 101, 101);
+}
+.wrong_s3_input:focus {
+  border-color: #f26565;
+}
+.info_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.icon {
+  /* position: relative; */
+  cursor: pointer;
+}
+.info_text {
+  top: 30px;
+  position: absolute;
+  min-width: 1000%;
+  height: 700%;
+  /* margin-top: 30px; */
+  border-radius: 5px;
+  background-color: #998add;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 0.8em;
+  padding-left: 5px;
+  font-family: Outfit, sans-serif;
+}
+.info_text .convention_header {
+  text-decoration: underline;
+  margin-left: 0;
+  margin-top: 5px;
+}
+.info_text p {
+  margin: 0;
+  margin-left: 5px;
+}
+.info_text::before {
+  content: "";
+  border-style: solid;
+  border-width: 0 0.5em 1.2em;
+  border-color: transparent transparent #998add;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.display_none {
+  display: none;
 }
 @media screen and (max-width: 1400px) {
   .single_header_info {

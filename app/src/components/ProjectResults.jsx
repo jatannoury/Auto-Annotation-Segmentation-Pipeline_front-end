@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/results.css";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { BsImage } from "react-icons/bs";
 import s3_controller from "../tools/s3_controller";
 import dynamoDB_controller from "../tools/dynamo_db_controller";
 const ProjectResults = ({
@@ -12,7 +13,6 @@ const ProjectResults = ({
   aggregatedOutputData,
   setAggregatedOutputData,
 }) => {
-  console.log(projectInfo);
   const [doneProjectInfo, setDoneProjectInfo] = useState(null);
   const [inputKeys, setInputKeys] = useState(null);
   const [outputKeys, setOutputKeys] = useState(null);
@@ -84,8 +84,7 @@ const ProjectResults = ({
         </div>
       </div>
       <div className="results_viewer">
-        {aggregatedInputData !== null &&
-          inputKeys !== null &&
+        {aggregatedInputData !== null && inputKeys !== null ? (
           aggregatedInputData.map((element, index) => {
             let uint8Array = new Uint8Array(element.Body);
             let base64String = btoa(String.fromCharCode(...uint8Array));
@@ -111,7 +110,48 @@ const ProjectResults = ({
                 </div>
               </>
             );
-          })}
+          })
+        ) : (
+          <>
+            <div className="image_name loader_bg">
+              <div className="name"></div>
+            </div>
+            <div className="result_row">
+              <div className="image image_left" style={{ borderColor: "grey" }}>
+                <span className="loader">
+                  <BsImage className="loader" />
+                </span>
+              </div>
+
+              <div
+                className="image image_right"
+                style={{ borderColor: "grey" }}
+              >
+                <span className="loader">
+                  <BsImage className="loader" />
+                </span>
+              </div>
+            </div>
+            <div className="image_name loader_bg" style={{ borderColor: "grey" }}>
+              <div className="name"></div>
+            </div>
+            <div className="result_row">
+              <div className="image image_left" style={{ borderColor: "grey" }}>
+                <span className="loader">
+                  <BsImage className="loader" />
+                </span>
+              </div>
+              <div
+                className="image image_right"
+                style={{ borderColor: "grey" }}
+              >
+                <span className="loader">
+                  <BsImage className="loader" />
+                </span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -11,10 +11,6 @@ let sections = {
     link: "/Instant-Prediction",
     icon: <AiFillThunderbolt />,
   },
-  Home2: {
-    link: "/Home",
-    icon: <AiTwotoneHome />,
-  },
   Logout: {
     link: "/",
     icon: <ImExit />,

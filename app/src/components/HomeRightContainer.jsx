@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiFillFileAdd } from "react-icons/ai";
+import { TbFolderQuestion } from "react-icons/tb";
 import Project from "./Project";
 import Modal from "../screens/Modal";
 import CreateProject from "./CreateProject";
@@ -82,13 +83,16 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
             </div>
           </div>
           <div className="projects">
-            {projects !== null && projects.hasOwnProperty("data") ? (
+            {projects !== null &&
+            projects.hasOwnProperty("data") &&
+            projects.items_count !== 0 ? (
               projects.data
                 .slice() // Create a copy of the array to avoid mutating the original data
                 .sort(
                   (a, b) => new Date(b["createdAt"]) - new Date(a["createdAt"])
                 ) // Sort by createdAt
                 .map((project, index) => {
+                  console.log(index);
                   if (index >= 5) {
                     return <></>;
                   }
@@ -110,7 +114,10 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
                   );
                 })
             ) : (
-              <></>
+              <div className="no_project">
+                <TbFolderQuestion size={120} />
+                <div>No Projects</div>
+              </div>
             )}
           </div>
         </div>

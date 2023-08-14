@@ -162,7 +162,7 @@ const InstantPredictionBody = ({
         close_input_image={close_input_image}
       />
       <div className="convert_container">
-        <div onClick={handleInstantPrediction}>
+        <div onClick={handleInstantPrediction} style={{ cursor: "pointer" }}>
           <SiConvertio
             size={50}
             className={`${

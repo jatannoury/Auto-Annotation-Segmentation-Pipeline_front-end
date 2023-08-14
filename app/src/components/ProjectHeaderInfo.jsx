@@ -1,7 +1,7 @@
 import React from "react";
 import { camelCaseToSpaceSeparated } from "../tools/string_manipulators";
 import { HiRefresh } from "react-icons/hi";
-const ProjectHeaderInfo = ({ projectInfo, setProjectInfo }) => {
+const ProjectHeaderInfo = ({ projectInfo, setProjectInfo, nb_of_files }) => {
   const handleHTMLTag = (key) => {
     if (key === "projectName") {
       return (
@@ -82,7 +82,7 @@ const ProjectHeaderInfo = ({ projectInfo, setProjectInfo }) => {
           type="text"
           disabled
           className="single_header_input"
-          placeholder="0"
+          placeholder={nb_of_files}
         ></input>
         <div className="single_header_input_info">Images Number</div>
       </div>

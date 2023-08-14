@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { TiInfoLarge } from "react-icons/ti";
 
@@ -29,13 +29,20 @@ const Project = () => {
   const [selectedDirTree, setSelectedDirTree] = useState(null);
   const [s3Path, setS3Path] = useState("");
   const [viewResults, setViewResults] = useState(false);
-  const [screenSize, setScreenSize] = useState(null);
+  const [projectSatus, setProjectStatus] = useState("Pending");
   const [indexNumber, setIndexNumber] = useState(5);
   const [aggregatedInputData, setAggregatedInputData] = useState(null);
   const [aggregatedOutputData, setAggregatedOutputData] = useState(null);
+  const [isValidS3Path, setIsValidS3Path] = useState(true);
+  const location = useLocation();
+
   useEffect(() => {
+    console.log(projects)
     projects.data.forEach((element) => {
-      element.project_id === params.project_id && setProjectInfo(element);
+      if (element.project_id === params.project_id) {
+        setProjectInfo(element);
+        setProjectStatus(element["status"]);
+      }
     });
   }, []);
   useEffect(() => {
@@ -46,27 +53,36 @@ const Project = () => {
       toast.error("Request not successfull", {
         autoClose: 2000,
       });
+      dispatch(reset());
     } else if (isSuccess) {
+      setProjectInfo({ ...projectInfo, ["status"]: "Running" });
+      setProjectStatus("Running");
       toast.success("Success", {
         autoClose: 2000,
       });
+      dispatch(reset());
     }
-    dispatch(reset());
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, request_name]);
   const handleViewResults = (e) => {
     if (!e.target.className.includes("view_prediction_btn")) {
+      return;
+    }
+    if (projectSatus !== "Done") {
       return;
     }
     setViewResults(true);
   };
   const handleRunProject = () => {
     if (selectedDir === null) {
-      toast.error("Please Select Directory", {
+      toast.error("Please Input Directory", {
         autoClose: 2000,
       });
       return;
     }
-    setProjectInfo({ ...projectInfo, ["status"]: "Running" });
+    if (isValidS3Path === false) {
+      alert("Invalid S3 Path. Please Check Info Icon");
+      return;
+    }
     dispatch(start_project(handleRequestInfo(selectedDir, projectInfo, user)));
   };
 
@@ -74,14 +90,16 @@ const Project = () => {
     setBurgerMenuClicked(!burgerMenuClicked);
   };
   const handleScroll = (e) => {
-    if (viewResults === false) {
-      return;
-    }
     const scrollPosition = e.target.scrollTop;
     const totalContentHeight = e.target.scrollHeight;
     const windowHeight = e.target.clientHeight;
     const distanceToBottom =
       totalContentHeight - (scrollPosition + windowHeight);
+    if (e.target.querySelector(".import_dir_info") !== null) {
+    }
+    if (viewResults === false) {
+      return;
+    }
 
     if (
       indexNumber <= aggregatedInputData.length &&
@@ -118,8 +136,10 @@ const Project = () => {
               </div>
               <div>{projectInfo["projectName"]}</div>
             </div>
-            {projectInfo["status"] === "Pending" ? (
+            {projectSatus === "Pending" ? (
               <PendingProject
+                setIsValidS3Path={setIsValidS3Path}
+                isValidS3Path={isValidS3Path}
                 s3Path={s3Path}
                 setSelectedDirTree={setSelectedDirTree}
                 setSelectedDir={setSelectedDir}
@@ -130,9 +150,10 @@ const Project = () => {
                 handleRunProject={handleRunProject}
                 selectedDirTree={selectedDirTree}
               />
-            ) : projectInfo["status"] === "Running" || viewResults === false ? (
+            ) : projectSatus !== "Pending" && viewResults === false ? (
               <InProgressProject
                 projectInfo={projectInfo}
+                setProjectInfo={setProjectInfo}
                 handleViewResults={handleViewResults}
               />
             ) : (

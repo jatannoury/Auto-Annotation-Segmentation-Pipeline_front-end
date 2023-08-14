@@ -13,8 +13,9 @@ import {
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { projects } = useSelector((state) => state.projects);
   useEffect(() => {
-    dispatch(get_projects(user.userId));
+    dispatch(get_projects(user.userId));  
   }, []);
   const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
 

@@ -18,7 +18,7 @@ export const create_project = createAsyncThunk(
     try {
       let response = await projectService.create_project(project);
       if (response?.status === 201) {
-        return thunkApi.fulfillWithValue("Project Created");
+        return response;
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
       }
@@ -52,6 +52,7 @@ export const get_projects = createAsyncThunk(
     try {
       let response = await projectService.get_projects(user_id);
       if (response.status === 200) {
+        console.log(response);
         return response;
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
@@ -91,7 +92,7 @@ export const projectSlice = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.message = null;
-      state.request_name=""
+      state.request_name = "";
     },
     empty_request_name: (state) => {
       state.request_name = "";
@@ -112,7 +113,15 @@ export const projectSlice = createSlice({
       .addCase(create_project.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
+
+        state.project = action.payload.data.project_info;
         state.projects.data = [state.project, ...state.projects.data];
+        const storedProjects = localStorage.setItem(
+          "projects",
+          JSON.stringify(state.projects)
+        );
+
+        state.projects.items_count += 1;
         state.project = "";
       })
       .addCase(create_project.rejected, (state, action) => {
@@ -138,10 +147,13 @@ export const projectSlice = createSlice({
       })
       .addCase(get_projects.pending, (state) => {
         state.isLoading = true;
+        state.request_name = "get_project";
       })
       .addCase(get_projects.fulfilled, (state, action) => {
+        console.log("EASYYY");
         state.isSuccess = true;
         state.isLoading = false;
+        console.log(action.payload);
         state.projects = action.payload.data;
         localStorage.setItem("projects", JSON.stringify(action.payload.data));
       })
@@ -160,6 +172,7 @@ export const projectSlice = createSlice({
         state.isLoading = false;
         state.message = "Success";
         let dummy = [...state.projects.data];
+        state.projects.items_count -= 1;
         state.projects.data = dummy.filter((element) => {
           return element["project_id"] !== action.payload.data.project_id;
         });

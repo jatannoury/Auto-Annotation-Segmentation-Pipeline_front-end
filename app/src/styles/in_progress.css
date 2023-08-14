@@ -1,23 +1,26 @@
 .in_progress_main_container {
   /* border: 1px solid black; */
   width: 100%;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.linear_gradient_color {
+  background-image: linear-gradient(to bottom, #f8eefa, #705cc9);
 }
 .progress_info_row {
   width: 92.5%;
   height: 50%;
   /* border: 1px solid black; */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  margin-bottom: 2%;
 }
 
 .info_conatiner {
-  height: 80%;
+  height: 100%;
   width: 30%;
   /* border: 2px solid #705cc9; */
   border-radius: 10px;
@@ -26,7 +29,7 @@
 }
 
 .info_header {
-  height: 10%;
+  height: 5%;
   color: #583dcc;
   font-weight: 500;
   font-family: Outfit, sans-serif;
@@ -45,7 +48,7 @@
 }
 
 .text_info {
-  color: white;
+  color: #705cc9;
   font-weight: 700;
   font-size: 2.5em;
   display: flex;
@@ -59,22 +62,23 @@
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: white;
+  color: #705cc9;
 }
 .elapsed_time_card:nth-child(1) {
   text-align: end;
 }
 .time_elapsed_description {
-  color: white;
+  color: #705cc9;
   font-size: 0.3em;
 }
 .nb_imgs_info {
   font-size: 3em;
-  color: white;
+  font-weight: 700;
+  color: #705cc9;
 }
 .view_prediction {
   width: 98%;
-  height: 5%;
+  height: 40px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -84,6 +88,7 @@
   width: 8%;
   background-color: #705cc9;
   color: white;
+  font-family: Outfit, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

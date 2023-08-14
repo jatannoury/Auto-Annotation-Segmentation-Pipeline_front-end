@@ -35,10 +35,7 @@
   padding-left: 10%;
   margin-top: 5%;
 }
-.input_component.submit.sign_up {
-  padding-left: 0%;
-  width: 45%;
-}
+
 .input_component.submit .close {
   background-color: rgb(248, 73, 73);
   border: none;

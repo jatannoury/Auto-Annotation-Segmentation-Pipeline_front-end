@@ -1,7 +1,12 @@
 import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { BiSolidUser } from "react-icons/bi";
+import { useSelector, useDispatch } from "react-redux";
+
 const LeftContainerHeader = ({ burger_menu_handler }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div>
       <div className="burger_menu_left_container">
@@ -12,7 +17,7 @@ const LeftContainerHeader = ({ burger_menu_handler }) => {
         <div className="user_icon">
           <BiSolidUser />
         </div>
-        <p className="user_name">Joseph Tannoury</p>
+        <p className="user_name">{`${user["firstName"]} ${user["lastName"]}`}</p>
       </div>
     </div>
   );

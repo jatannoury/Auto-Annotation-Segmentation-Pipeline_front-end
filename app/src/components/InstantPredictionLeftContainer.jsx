@@ -60,7 +60,7 @@ const InstantPredictionLeftContainer = ({
           <img src={selectedImage} alt="Selected" />
         ) : selectedDir && inputType === "batch" ? (
           <div className="sleected_dir_info">
-            <div className="info">
+            <div className="batch_info">
               <div className="single_info">
                 <GoNumber size={25} />
               </div>
@@ -68,7 +68,7 @@ const InstantPredictionLeftContainer = ({
                 Number Of Files : {selectedDir["nb_of_files"]}
               </div>
             </div>
-            <div className="info">
+            <div className="batch_info">
               <div className="single_info">
                 <BiDownArrowAlt size={25} />
               </div>
@@ -76,7 +76,7 @@ const InstantPredictionLeftContainer = ({
                 Oldest : {selectedDir["oldest"]}
               </div>
             </div>
-            <div className="info">
+            <div className="batch_info">
               <div className="single_info">
                 <BiUpArrowAlt size={25} />
               </div>
@@ -84,7 +84,7 @@ const InstantPredictionLeftContainer = ({
                 Newest : {selectedDir["newest"]}
               </div>
             </div>
-            <div className="info">
+            <div className="batch_info">
               <div className="single_info">
                 <MdStorage size={25} />
               </div>
@@ -92,7 +92,7 @@ const InstantPredictionLeftContainer = ({
                 Size(GB) : {selectedDir["total_size(GB)"]}
               </div>
             </div>
-            <div className="info">
+            <div className="batch_info">
               <div className="single_info">
                 <MdStorage size={25} />
               </div>

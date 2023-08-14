@@ -2,8 +2,8 @@ import AWS from "aws-sdk";
 class S3Controller {
   constructor() {
     AWS.config.update({
-      accessKeyId: "",
-      secretAccessKey: "",
+      accessKeyId: "AKIAZGKEV76KYXGDBZOT",
+      secretAccessKey: "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",
       region: "eu-central-1",
     });
     this.s3 = new AWS.S3();

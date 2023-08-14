@@ -3,8 +3,8 @@ import AWS from "aws-sdk";
 class DynamoDBController {
   constructor() {
     AWS.config.update({
-      accessKeyId: "",
-      secretAccessKey: "",
+      accessKeyId: "AKIAZGKEV76KYXGDBZOT",
+      secretAccessKey: "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",
       region: "eu-central-1",
     });
     this.dynamo_db = new AWS.DynamoDB();

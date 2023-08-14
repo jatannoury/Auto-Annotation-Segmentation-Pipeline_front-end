@@ -56,14 +56,14 @@ const CreateProject = ({
     totalNumber: 0,
     password: "",
     userId: user.userId,
-    protect: "",
-    storageType: "",
+    protect: true,
+    storageType: "Cloud",
   });
   useEffect(() => {
     if (createProjectRequest === true) {
       setCreateProjectRequest(false);
       set_project(formData);
-
+      
       dispatch(create_project(formData));
     }
   }, [createProjectRequest]);

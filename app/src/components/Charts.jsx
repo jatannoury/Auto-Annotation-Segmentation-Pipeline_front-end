@@ -12,9 +12,10 @@ import {
   LineChart,
   Line,
   Cell,
+  Label,
 } from "recharts";
 
-const Charts = ({ chartType }) => {
+const Charts = ({ chartType, data }) => {
   const pie_data = [
     {
       name: "Processe",
@@ -71,44 +72,58 @@ const Charts = ({ chartType }) => {
   ];
 
   const bar_data = [
-    { name: ".jpg", students: 400 },
-    { name: ".avif", students: 700 },
-    { name: ".png", students: 200 },
-    { name: ".test", students: 10000 },
+    { name: ".jpg", count: 400 },
+    { name: ".avif", count: 700 },
+    { name: ".png", count: 200 },
+    { name: ".test", count: 10000 },
   ];
-  let COLORS = ["#8884d8", "white"];
+  let COLORS = ["#8884d8", "#b1a6de"];
   const pie_chart = (
-    <ResponsiveContainer width="100%" height="100%">
-      <PieChart width="100%" height="100%">
+    <ResponsiveContainer width="100%" height={300}>
+      <PieChart>
         <Pie
           stroke="#8884d8"
-          // strokeWidth=""
-          data={pie_data}
+          data={data}
           dataKey="value"
           nameKey="name"
           cx="50%"
           cy="50%"
           innerRadius={60}
           outerRadius={80}
-          fill="white"
-          // label
+          fill="#b1a6de"
         >
           {pie_data.map((entry, index) => (
-            <Cell fill={COLORS[index % COLORS.length]} />
+            <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
+          <Label
+            content={({}) => {
+              let percent =
+                data[0]["value"] / (data[0]["value"] + data[1]["value"]);
+              return (
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize={20} // Adjust the font size as needed
+                  fontWeight={700}
+                  fontFamily="Outfit, sans-serif"
+                  fill="#8884d8" // Color of the percentage label text
+                >
+                  {`${(percent * 100).toFixed(2)}%`}
+                </text>
+              );
+            }}
+          />
         </Pie>
         <Legend />
-        <Tooltip
-          contentStyle={{ color: "white" }}
-          labelStyle={{ color: "white" }}
-        />
       </PieChart>
     </ResponsiveContainer>
   );
   const horizontal_bar_chart = (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
-        data={bar_data}
+        data={data}
         layout="vertical"
         margin={{
           right: 20,
@@ -122,14 +137,14 @@ const Charts = ({ chartType }) => {
           contentStyle={{ color: "#8884d8" }}
           labelStyle={{ color: "#8884d8" }}
         />
-        <Bar dataKey="students" fill="#8884d8" />
+        <Bar dataKey="count" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );
   const vertical_bar_chart = (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
-        data={bar_data}
+        data={data}
         margin={{
           right: 20,
           top: 20,
@@ -142,7 +157,7 @@ const Charts = ({ chartType }) => {
           contentStyle={{ color: "#8884d8" }}
           labelStyle={{ color: "#8884d8" }}
         />
-        <Bar dataKey="students" fill="#8884d8" />
+        <Bar dataKey="count" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -150,7 +165,7 @@ const Charts = ({ chartType }) => {
     <ResponsiveContainer width="100%" height={300}>
       <LineChart
         width={500}
-        height={300}
+        height={10} // Adjust the height here
         data={line_data}
         margin={{
           top: 20,
@@ -160,16 +175,18 @@ const Charts = ({ chartType }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" tick={{ fill: "white" }} />
-        <YAxis tick={{ fill: "white" }} />
+        <XAxis dataKey="name" tick={{ fill: "#705cc9" }} />
+        <YAxis tick={{ fill: "#705cc9" }} />
+        {/* Tooltip component with customized content */}
         <Tooltip
-          contentStyle={{ color: "white" }}
-          labelStyle={{ color: "white" }}
+          contentStyle={{ color: "#8884d8" }}
+          labelStyle={{ color: "#8884d8" }}
+          formatter={(value, name, props) => [value, props.payload.name]} // Show x and y values
         />
         <Line
           type="monotone"
           dataKey="pv"
-          stroke="white"
+          stroke="#705cc9"
           activeDot={{ r: 8 }}
         />
       </LineChart>

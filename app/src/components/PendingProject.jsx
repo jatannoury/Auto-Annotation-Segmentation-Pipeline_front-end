@@ -17,7 +17,10 @@ const PendingProject = ({
   setProjectInfo,
   handleRunProject,
   selectedDirTree,
+  isValidS3Path,
+  setIsValidS3Path,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const handleIconClick = () => {
     fileInputRef.current.click();
   };
@@ -38,8 +41,14 @@ const PendingProject = ({
       )
     );
   };
+  const handleInfoShow = () => {
+    setIsHovered(!isHovered);
+  };
   const handleS3Path = (e) => {
     setS3Path(e.target.value);
+    // regex that only allows 3 delimiters : / and - and _ AND no 2 consecutive delimiters AND string can be empty AND cannot start with any delimiter
+    const isValid = /^(?![-_/])[\w\/-]*(?:\/[\w-]+)*$/.test(e.target.value);
+    setIsValidS3Path(isValid);
   };
   function getTotalFileSize(fileList) {
     let totalSize = 0;
@@ -60,6 +69,7 @@ const PendingProject = ({
             <ProjectHeaderInfo
               projectInfo={projectInfo}
               setProjectInfo={setProjectInfo}
+              nb_of_files={selectedDir ? selectedDir["nb_of_files"] : 0}
             />
             <div className="project_body_info">
               <div className="extra_info_container">
@@ -77,19 +87,51 @@ const PendingProject = ({
                   />
                 </div>
                 <div className="right_right_container">
-                  <div className="s3_route_placeholder_container">
+                  <div
+                    className={`s3_route_placeholder_container ${
+                      isValidS3Path === false ? "wrong_s3_input" : ""
+                    }`}
+                  >
                     <p>Cloud Storage Route</p>
                     <BsFillCloudyFill />:
                     <div className="s3_route_input_holder">
                       <input
                         type="text"
-                        className="s3_route_placeholder"
+                        className={`s3_route_placeholder ${
+                          isValidS3Path === false ? "wrong_s3_input" : ""
+                        }`}
                         value={s3Path}
                         onChange={handleS3Path}
                         placeholder=""
                       />
                     </div>
-                    <BsFillInfoCircleFill />
+                    <div className="info_container">
+                      <BsFillInfoCircleFill
+                        className="icon"
+                        onMouseEnter={handleInfoShow}
+                        onMouseLeave={handleInfoShow}
+                      />
+                      <div
+                        className={`info_text ${
+                          isHovered === false && isValidS3Path === true
+                            ? "display_none"
+                            : ""
+                        } ${
+                          isValidS3Path === false ? "wrong_s3_input_info" : ""
+                        } `}
+                      >
+                        <p className="convention_header">Convention:</p>
+                        <p className="convention_number">
+                          - Allowed delimiters: / - _
+                        </p>
+                        <p className="convention_number">
+                          - Path can't start with delimiter
+                        </p>
+                        <p className="convention_number">
+                          -No consecutive delimiter
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   <div className="start_process">
                     <div className="submit_btn" onClick={handleRunProject}>

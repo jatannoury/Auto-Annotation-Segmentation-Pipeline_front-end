@@ -138,8 +138,8 @@ input[type="submit"] {
   cursor: pointer;
 }
 input[type="submit"]:hover {
-  background-color: white;
-  color: #705cc9;
+  /* background-color: white; */
+  /* color: #705cc9; */
   box-shadow: 10px 10px 50px rgba(201, 158, 226, 1);
 }
 .input_component.submit.sign_up {

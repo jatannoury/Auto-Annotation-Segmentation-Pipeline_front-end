@@ -22,7 +22,7 @@ const InstantPredictionRadioBtns = ({
     <>
       <div className="checkbox_container">
         <div className="checkbox" id="single" onClick={handleToggle}>
-          {inputType === "single" && <BiCheck />}
+          {inputType === "single" ? <BiCheck /> : null}
         </div>
         <div className="type">Single</div>
       </div>
