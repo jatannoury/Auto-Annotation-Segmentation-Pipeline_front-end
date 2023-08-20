@@ -34,8 +34,9 @@ const AuthProject = ({
     e.preventDefault();
     toggleProjectClicked(false);
   };
+  
   useEffect(() => {
-    if (request_name !== "create_project") {
+    if (request_name !== "create_project" ) {
       return;
     }
     if (isError) {
@@ -50,11 +51,13 @@ const AuthProject = ({
         autoClose: 1000,
       });
 
+      dispatch(empty_request_name());
       dispatch(reset());
     } else if (isLoading) {
     }
     dispatch(empty_request_name());
-  }, [isError, isSuccess, projects]);
+    dispatch(reset());
+  }, [isError, isSuccess]);
 
   //   useEffect(() => {
   //     if (createProjectRequest === true) {

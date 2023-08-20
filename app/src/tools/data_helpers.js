@@ -11,11 +11,7 @@ function normalizeData(data) {
     }
     bins[binName].count += item.count;
   });
-  console.log(
-    Object.keys(bins).map((element) => {
-      return bins[element];
-    })
-  );
+
   return Object.keys(bins).map((element) => {
     return bins[element];
   });

@@ -27,7 +27,6 @@ const InProgressProject = ({
       return;
     }
     const interval = setInterval(() => {
-      console.log(runningProjectInfo);
       const targetTime = new Date(
         runningProjectInfo.hasOwnProperty("created_at") &&
         runningProjectInfo["created_at"]["S"].length > 0
@@ -80,7 +79,7 @@ const InProgressProject = ({
           projectInfo["project_id"],
           projectInfo["userId"]
         );
-      console.log(running_project_info);
+
       setRunningProjectInfo(running_project_info[0]);
       let input_keys = await s3_controller.get_objects_with_key(
         `${projectInfo["userId"]}/${running_project_info[0]["project_name"]["S"]}/`
@@ -126,7 +125,7 @@ const InProgressProject = ({
         })
       );
       running_project_info = running_project_info[0];
-      console.log(running_project_info);
+
       const targetTime = new Date(
         running_project_info.hasOwnProperty("created_at") &&
         running_project_info["created_at"]["S"].length > 0
@@ -139,10 +138,8 @@ const InProgressProject = ({
         running_project_info.hasOwnProperty("finished_at") &&
         running_project_info["finished_at"]["S"].length > 0
       ) {
-        console.log("FINISHED AT", running_project_info["finished_at"]);
         currentTimeUTC = new Date(running_project_info["finished_at"]["S"]);
         timeDifference = currentTimeUTC.getTime() - targetTime.getTime();
-        console.log(timeDifference); // Difference in milliseconds
       } else {
         const currentTime = new Date();
 
@@ -155,7 +152,6 @@ const InProgressProject = ({
           currentTime.getUTCSeconds()
         );
         timeDifference = currentTimeUTC.getTime() - targetTime.getTime(); // Difference in milliseconds
-        console.log(timeDifference); // Difference in milliseconds
       }
 
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));

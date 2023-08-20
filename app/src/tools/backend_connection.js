@@ -3,7 +3,7 @@ import http_tool from "./http_tool";
 class BackendConnection {
   constructor() {
     this.axios_object = axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: "http://3.127.217.65:8000",
     });
   }
 
@@ -66,7 +66,6 @@ class BackendConnection {
         password: password,
       }
     );
-    console.log(response);
     return response;
   }
   async instant_prediction(image) {

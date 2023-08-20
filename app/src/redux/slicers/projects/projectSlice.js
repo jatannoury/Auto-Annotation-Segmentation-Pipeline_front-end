@@ -52,7 +52,6 @@ export const get_projects = createAsyncThunk(
     try {
       let response = await projectService.get_projects(user_id);
       if (response.status === 200) {
-        console.log(response);
         return response;
       } else if (response?.response.status !== 201) {
         return thunkApi.rejectWithValue(response.response.data.detail);
@@ -89,7 +88,7 @@ export const authenticate_project = createAsyncThunk(
         info["project_id"],
         info["password"]
       );
-      console.log(response);
+
       if (response.data["message"] === "Correct credentials") {
         return thunkApi.fulfillWithValue("Authenticated");
       } else if (response?.response.status !== 200) {
@@ -170,10 +169,9 @@ export const projectSlice = createSlice({
         state.request_name = "get_project";
       })
       .addCase(get_projects.fulfilled, (state, action) => {
-        console.log("EASYYY");
         state.isSuccess = true;
         state.isLoading = false;
-        console.log(action.payload);
+
         state.projects = action.payload.data;
         localStorage.setItem("projects", JSON.stringify(action.payload.data));
       })
@@ -209,14 +207,14 @@ export const projectSlice = createSlice({
       .addCase(authenticate_project.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log(action);
-        state.message="Success"
+
+        state.message = "Success";
       })
       .addCase(authenticate_project.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        console.log(action);
+
         state.message = "Failed";
       });
   },

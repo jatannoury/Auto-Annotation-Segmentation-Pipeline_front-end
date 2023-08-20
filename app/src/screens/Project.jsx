@@ -39,7 +39,6 @@ const Project = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(projects);
     projects.data.forEach((element) => {
       if (element.project_id === params.project_id) {
         setProjectInfo(element);

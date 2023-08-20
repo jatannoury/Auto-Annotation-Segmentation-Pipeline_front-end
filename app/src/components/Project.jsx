@@ -58,7 +58,6 @@ const Project = ({
     setIsHovered(false);
   };
   const handleLocalNavigate = (e) => {
-    console.log(e.target);
     if (e.target instanceof SVGElement) {
       return;
     }

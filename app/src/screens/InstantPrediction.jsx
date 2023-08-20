@@ -57,7 +57,6 @@ const InstantPrediction = () => {
     setPredictedImagesCounter(predictedImagesCounter + 1);
   };
   const handleChangeDownloadType = (e) => {
-    console.log(e.target.className);
     handleHideDropDown();
     if (e.target.className === "download_options top_option") {
       setDownloadType(`${inputType} - IO`);
@@ -98,7 +97,6 @@ const InstantPrediction = () => {
   const downloadPrediction = async () => {
     if (downloadType.includes(" - L")) {
       const zip = new JSZip();
-      console.log(predictedLabels)
       predictedLabels.forEach((label, index) => {
         const fileName = `label_${index}.txt`;
         const labelData = label.toString();

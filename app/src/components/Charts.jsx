@@ -200,8 +200,6 @@ const Charts = ({ chartType, data }) => {
     case "horizontal_bar":
       return horizontal_bar_chart;
     case "vertical_bar":
-      console.log(data);
-
       return vertical_bar_chart;
     case "line":
       return line_chart;

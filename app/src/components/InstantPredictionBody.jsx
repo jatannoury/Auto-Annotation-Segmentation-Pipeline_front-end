@@ -90,8 +90,7 @@ const InstantPredictionBody = ({
       let polished_data = [...data.images].map(
         (element) => `data:image/jpeg;base64,${element}`
       );
-      console.log(data.labels);
-      console.log(data.labels.map((labelBase64) => atob(labelBase64)));
+
       setPredictedImages(polished_data);
       setPredictedLabels(data.labels.map((labelBase64) => atob(labelBase64)));
     }

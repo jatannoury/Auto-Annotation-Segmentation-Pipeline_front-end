@@ -40,7 +40,6 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
   const dispatch = useDispatch();
   const submitAuth = () => {
     // e.preventDefault();
-    console.log("TESTING");
     dispatch(
       authenticate_project({
         project_id: clickedProjectId,
@@ -49,13 +48,11 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     );
   };
   const handleNavigate = (e, project_id, isProtected) => {
-    console.log(e.target);
     setProjectClicked(true);
     setClickedProjectId(project_id);
     if (e.target instanceof SVGElement) {
     } else {
       if (isProtected === true) {
-        console.log(project_id);
       } else {
         navigate(`/Project/${project_id}`);
       }
@@ -66,20 +63,16 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
       e.target.className.baseVal === "pagination_icon_left" &&
       paginationIndex === 5
     ) {
-      console.log(paginationIndex);
       return;
     } else if (
       e.target.className.baseVal === "pagination_icon_right" &&
       paginationIndex >= projects.data.length
     ) {
-      console.log(paginationIndex);
       return;
     } else if (e.target.className.baseVal === "pagination_icon_left") {
       setPaginationIndex(paginationIndex - 5);
-      console.log(paginationIndex - 5);
     } else if (e.target.className.baseVal === "pagination_icon_right") {
       setPaginationIndex(paginationIndex + 5);
-      console.log(paginationIndex + 5);
     }
   };
   const toggleCreateBtn = (e) => {
@@ -90,7 +83,6 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     setCreateProjectClicked(!createProjectClicked);
   };
   useEffect(() => {
-    console.log(isError, isSuccess);
     if (request_name !== "authenticate_project") {
       return;
     }
@@ -109,7 +101,6 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
   }, [isError, isSuccess]);
   const toggleProjectClicked = () => {
     setProjectClicked(!projectClicked);
-    console.log(projectClicked);
   };
   useEffect(() => {
     if (request_name != "delete_project") {
@@ -180,14 +171,13 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
             {projects !== null &&
             projects.hasOwnProperty("data") &&
             projects.items_count !== 0 ? (
-              projects.data
+              projects?.data
                 .slice() // Create a copy of the array to avoid mutating the original data
                 .sort(
                   (a, b) => new Date(b["createdAt"]) - new Date(a["createdAt"])
                 ) // Sort by createdAt
                 .map((project, index) => {
-                  console.log(index);
-                  if (index > paginationIndex || index <= paginationIndex - 5) {
+                  if (index > paginationIndex || index < paginationIndex - 4) {
                     return <></>;
                   }
                   return (
@@ -229,13 +219,14 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
                     onClick={handle_pagination}
                   />
                 )}
-                {paginationIndex >= projects.data.length === false && (
-                  <BiSkipNext
-                    size={35}
-                    className="pagination_icon_right"
-                    onClick={handle_pagination}
-                  />
-                )}
+                {projects.data !== null &&
+                  paginationIndex >= projects.data.length - 1 === false && (
+                    <BiSkipNext
+                      size={35}
+                      className="pagination_icon_right"
+                      onClick={handle_pagination}
+                    />
+                  )}
               </div>
             </div>
           </div>

@@ -16,7 +16,6 @@ const ProjectResults = ({
   const [doneProjectInfo, setDoneProjectInfo] = useState(null);
   const [inputKeys, setInputKeys] = useState(null);
   const [outputKeys, setOutputKeys] = useState(null);
-  console.log(projectInfo);
   const handleBackToInfo = () => {
     setViewResults(false);
   };
