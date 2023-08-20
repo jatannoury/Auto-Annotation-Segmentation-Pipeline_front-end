@@ -26,7 +26,7 @@ const InstantPrediction = () => {
   const [predictedImagesCounter, setPredictedImagesCounter] = useState(0);
   const [showDropDown, setShowDropDown] = useState(false);
   const [downloadType, setDownloadType] = useState(`${inputType} - O`);
-
+  const [predictedLabels, setPredictedLabels] = useState(null);
   const burger_menu_handler = () => {
     setBurgerMenuClicked(!burgerMenuClicked);
   };
@@ -57,12 +57,16 @@ const InstantPrediction = () => {
     setPredictedImagesCounter(predictedImagesCounter + 1);
   };
   const handleChangeDownloadType = (e) => {
+    console.log(e.target.className);
     handleHideDropDown();
     if (e.target.className === "download_options top_option") {
       setDownloadType(`${inputType} - IO`);
     }
-    if (e.target.className === "download_options bottom_option") {
+    if (e.target.className === "download_options middle_option") {
       setDownloadType(`${inputType} - O`);
+    }
+    if (e.target.className === "download_options bottom_option") {
+      setDownloadType(`${inputType} - L`);
     }
   };
   const handleShowDropDown = () => {
@@ -92,13 +96,27 @@ const InstantPrediction = () => {
     setPredictedImage(null);
   };
   const downloadPrediction = async () => {
+    if (downloadType.includes(" - L")) {
+      const zip = new JSZip();
+      console.log(predictedLabels)
+      predictedLabels.forEach((label, index) => {
+        const fileName = `label_${index}.txt`;
+        const labelData = label.toString();
+        zip.file(fileName, labelData);
+      });
+
+      zip.generateAsync({ type: "blob" }).then((res) => {
+        saveAs(res, `Labels.zip`);
+      });
+    }
     if (inputType === "single") {
-      if (rawImage === null) {
+      if (rawImage === null && predictedLabels === null) {
         toast.error("Please input an image", {
           autoClose: 3000,
         });
         return;
       }
+
       if (downloadType.includes("- O") && inputType === "single") {
         saveAs(predictedImage, "image.jpg");
       }
@@ -191,6 +209,20 @@ const InstantPrediction = () => {
         processData();
       }
     }
+    if (downloadType === "Labels") {
+      const zip = new JSZip();
+
+      predictedImages.map(async (predicted_img, index) => {
+        const fileName = `predicted_image_${index}.jpg`;
+        const fileData = atob(
+          predicted_img.replace("data:image/jpeg;base64,", "")
+        );
+        zip.file(fileName, fileData, { binary: true });
+      });
+      await zip.generateAsync({ type: "blob" }).then((res) => {
+        saveAs(res, `${downloadType.replace(" - O", "_Output_Only")}.zip`);
+      });
+    }
   };
   return (
     <div className="main_container">
@@ -257,10 +289,16 @@ const InstantPrediction = () => {
                           Input/Output
                         </div>
                         <div
-                          className="download_options bottom_option"
+                          className="download_options middle_option"
                           onClick={handleChangeDownloadType}
                         >
                           Only Output
+                        </div>
+                        <div
+                          className="download_options bottom_option"
+                          onClick={handleChangeDownloadType}
+                        >
+                          Labels
                         </div>
                       </div>
                     </div>
@@ -298,6 +336,8 @@ const InstantPrediction = () => {
             setPredictedImages={setPredictedImages}
             predictedImages={predictedImages}
             predictedImagesCounter={predictedImagesCounter}
+            predictedLabels={predictedLabels}
+            setPredictedLabels={setPredictedLabels}
           />
 
           {predictedImages && (

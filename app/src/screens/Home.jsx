@@ -13,10 +13,15 @@ import {
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { projects } = useSelector((state) => state.projects);
+  const { projects, isSuccess, isError } = useSelector(
+    (state) => state.projects
+  );
   useEffect(() => {
-    dispatch(get_projects(user.userId));  
+    dispatch(get_projects(user.userId));
   }, []);
+  useEffect(() => {
+    dispatch(reset());
+  }, [isError, isSuccess]);
   const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
 
   const burger_menu_handler = () => {

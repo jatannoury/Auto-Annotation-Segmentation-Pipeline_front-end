@@ -14,6 +14,7 @@ import {
   Cell,
   Label,
 } from "recharts";
+import { normalizeData } from "../tools/data_helpers";
 
 const Charts = ({ chartType, data }) => {
   const pie_data = [
@@ -144,7 +145,7 @@ const Charts = ({ chartType, data }) => {
   const vertical_bar_chart = (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
-        data={data}
+        data={normalizeData(data)}
         margin={{
           right: 20,
           top: 20,
@@ -199,6 +200,8 @@ const Charts = ({ chartType, data }) => {
     case "horizontal_bar":
       return horizontal_bar_chart;
     case "vertical_bar":
+      console.log(data);
+
       return vertical_bar_chart;
     case "line":
       return line_chart;

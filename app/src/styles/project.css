@@ -69,6 +69,7 @@
   display: flex;
   justify-content: space-between;
   align-self: center;
+  font-family: Outfit, sans-serif;
 }
 .single_header_info {
   border-radius: 10px;
@@ -218,6 +219,7 @@
   font-size: 13px;
   font-weight: 500;
   flex-wrap: wrap;
+  font-family: Outfit, sans-serif;
 }
 .left_bndry_image_spacer {
   width: 1.7%;

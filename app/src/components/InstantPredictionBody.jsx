@@ -25,6 +25,8 @@ const InstantPredictionBody = ({
   setPredictedImages,
   predictedImages,
   predictedImagesCounter,
+  predictedLabels,
+  setPredictedLabels,
 }) => {
   const dispatch = useDispatch();
   const [isHovered, setIsHovered] = useState(false);
@@ -60,7 +62,8 @@ const InstantPredictionBody = ({
     } else if (isSuccess) {
       setTimeout(() => {
         stop_btn_animation();
-        setPredictedImage(`data:image/jpeg;base64,${data}`);
+        setPredictedImage(`data:image/jpeg;base64,${data.image}`);
+        setPredictedLabels(data.labels.map((labelBase64) => atob(labelBase64)));
         toast.success("Success", {
           autoClose: 2000,
         });
@@ -84,10 +87,13 @@ const InstantPredictionBody = ({
       toast.success("Success", {
         autoClose: 2000,
       });
-      let polished_data = [...data].map(
+      let polished_data = [...data.images].map(
         (element) => `data:image/jpeg;base64,${element}`
       );
+      console.log(data.labels);
+      console.log(data.labels.map((labelBase64) => atob(labelBase64)));
       setPredictedImages(polished_data);
+      setPredictedLabels(data.labels.map((labelBase64) => atob(labelBase64)));
     }
     stop_btn_animation();
 

@@ -57,6 +57,18 @@ class BackendConnection {
     );
     return response;
   }
+  async authenticate_project(project_id, password) {
+    const response = await http_tool.post_request(
+      this.axios_object,
+      `/project/authenticate`,
+      {
+        project_id: project_id,
+        password: password,
+      }
+    );
+    console.log(response);
+    return response;
+  }
   async instant_prediction(image) {
     const response = await http_tool.post_request(
       this.axios_object,

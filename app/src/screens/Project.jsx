@@ -12,6 +12,7 @@ import handleRequestInfo from "../tools/handlers/project_screen_handlers";
 import PendingProject from "../components/PendingProject";
 import InProgressProject from "../components/InProgressProject";
 import ProjectResults from "../components/ProjectResults";
+import Spinner from "../components/Spinner";
 
 const Project = () => {
   const dispatch = useDispatch();
@@ -34,10 +35,11 @@ const Project = () => {
   const [aggregatedInputData, setAggregatedInputData] = useState(null);
   const [aggregatedOutputData, setAggregatedOutputData] = useState(null);
   const [isValidS3Path, setIsValidS3Path] = useState(true);
+  const [useSpinner, setUseSpinner] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    console.log(projects)
+    console.log(projects);
     projects.data.forEach((element) => {
       if (element.project_id === params.project_id) {
         setProjectInfo(element);
@@ -50,11 +52,15 @@ const Project = () => {
       return;
     }
     if (isError) {
+      setUseSpinner(false);
+
       toast.error("Request not successfull", {
         autoClose: 2000,
       });
       dispatch(reset());
     } else if (isSuccess) {
+      setUseSpinner(false);
+
       setProjectInfo({ ...projectInfo, ["status"]: "Running" });
       setProjectStatus("Running");
       toast.success("Success", {
@@ -83,6 +89,7 @@ const Project = () => {
       alert("Invalid S3 Path. Please Check Info Icon");
       return;
     }
+    setUseSpinner(true);
     dispatch(start_project(handleRequestInfo(selectedDir, projectInfo, user)));
   };
 
@@ -121,7 +128,9 @@ const Project = () => {
         )}
         <div className="project_right_main_container" onScroll={handleScroll}>
           <div className="project_right_container">
-            {burgerMenuClicked === false ? (
+            {useSpinner === true ? (
+              <Spinner />
+            ) : burgerMenuClicked === false ? (
               <RxHamburgerMenu
                 size={30}
                 onClick={burger_menu_handler}

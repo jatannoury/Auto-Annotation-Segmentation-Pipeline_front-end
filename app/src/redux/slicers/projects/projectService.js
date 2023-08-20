@@ -17,11 +17,16 @@ const start_project = async (project_info) => {
   const response = await backend_cnx.start_project(project_info);
   return response;
 };
+const authenticate_project = async (project_id, password) => {
+  const response = await backend_cnx.authenticate_project(project_id, password);
+  return response;
+};
 
 const projectService = {
   create_project,
   get_projects,
   delete_project,
   start_project,
+  authenticate_project,
 };
 export default projectService;

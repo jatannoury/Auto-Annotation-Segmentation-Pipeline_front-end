@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { MdPending } from "react-icons/md";
-import { BsFillCloudyFill, BsServer } from "react-icons/bs";
+import {
+  BsFillCloudyFill,
+  BsServer,
+  BsFillLockFill,
+  BsFillUnlockFill,
+} from "react-icons/bs";
 import { FaTrashAlt, FaHandPointRight } from "react-icons/fa";
+
 import PointerContainer from "./PointerContainer";
 import { useSelector, useDispatch } from "react-redux";
 import {
   delete_project,
   reset,
   empty_request_name,
+  authenticate_project,
 } from "../redux/slicers/projects/projectSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const Project = ({
   project_name,
@@ -21,9 +27,14 @@ const Project = ({
   total,
   status,
   storage,
+  isProtected,
+  setProjectClicked,
+  setClickedProjectId,
+  handleNavigate,
+  setIsclickedProjectProtected,
 }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const [isHovered, setIsHovered] = useState(false);
   const [projectId, setProjectId] = useState(project_id);
   const delete_project_by_id = (e) => {
@@ -31,6 +42,10 @@ const Project = ({
       dispatch(delete_project(projectId));
     }
   };
+  const { isError, isSuccess, request_name, message } = useSelector(
+    (state) => state.projects
+  );
+
   let status_color_mapping = {
     Pending: "rgb(247, 151, 116)",
     Canceled: "red",
@@ -42,11 +57,15 @@ const Project = ({
   const hide_pointer = (e) => {
     setIsHovered(false);
   };
-  const handleNavigate = (e) => {
+  const handleLocalNavigate = (e) => {
+    console.log(e.target);
     if (e.target instanceof SVGElement) {
-    } else {
-      navigate(`/Project/${projectId}`);
+      return;
     }
+    setIsclickedProjectProtected(isProtected);
+    setClickedProjectId(project_id);
+
+    handleNavigate(e, project_id, isProtected);
   };
   return (
     <div className="project_container">
@@ -55,7 +74,7 @@ const Project = ({
         className="project"
         onMouseEnter={show_pointer}
         onMouseLeave={hide_pointer}
-        onClick={handleNavigate}
+        onClick={handleLocalNavigate}
       >
         <div className="project_icon">
           <AiOutlineFundProjectionScreen size={30} />
@@ -86,8 +105,17 @@ const Project = ({
             </div>
           </div>
         </div>
-        <div className={`delte_icon ${projectId}`}>
-          <FaTrashAlt onClick={delete_project_by_id} size={20} />
+        <div className={`delte_icon_container ${projectId}`}>
+          {isProtected === true ? (
+            <BsFillLockFill size={20} />
+          ) : (
+            <BsFillUnlockFill size={20} />
+          )}
+          <FaTrashAlt
+            onClick={delete_project_by_id}
+            size={20}
+            className="delte_icon"
+          />
         </div>
       </div>
     </div>

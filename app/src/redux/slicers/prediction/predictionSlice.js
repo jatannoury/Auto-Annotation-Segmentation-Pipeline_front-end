@@ -67,7 +67,7 @@ export const predictionSlice = createSlice({
       .addCase(instant_prediction.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.data = action.payload.data.image;
+        state.data = action.payload.data;
       })
       .addCase(instant_prediction.rejected, (state, action) => {
         state.isLoading = false;
@@ -81,7 +81,7 @@ export const predictionSlice = createSlice({
       .addCase(instant_batch_prediction.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.data = action.payload.data.images;
+        state.data = action.payload.data;
       })
       .addCase(instant_batch_prediction.rejected, (state, action) => {
         state.isLoading = false;

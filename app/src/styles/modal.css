@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-left: 10%;
+  padding-left: 9%;
   margin-top: 5%;
 }
 
@@ -53,6 +53,34 @@
   background-color: #705cc9;
   color: white;
   box-shadow: 0px 0px 30px rgb(201, 158, 226);
+}
+.submit_row.authenticate {
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.row.create_modal.authenticate {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-left: 0;
+}
+.row.create_modal.authenticate .input_component {
+  width: 80%;
+  padding-left: 3%;
+}
+.model-authenticate {
+  min-width: 20%;
+  max-width: 30%;
+  min-height: 35%;
+  max-height: 50%;
+}
+.authenticate input {
+  width: 100%;
+}
+.authenticate .input_component {
+  width: 95%;
+  margin-right: 3%;
 }
 @media (max-width: 1400px) or (max-height: 700px) {
   .modal-main {
