@@ -66,7 +66,7 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
       return;
     } else if (
       e.target.className.baseVal === "pagination_icon_right" &&
-      paginationIndex >= projects.data.length
+      paginationIndex >= projects?.data.length
     ) {
       return;
     } else if (e.target.className.baseVal === "pagination_icon_left") {
@@ -107,7 +107,7 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
       return;
     }
     if (isError) {
-      message.map((err) => {
+      message?.map((err) => {
         toast.error(`${err.loc[1]} ${err.msg}`, {
           autoClose: 2000,
         });
@@ -123,7 +123,27 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
     // dispatch(empty_request_name());
     dispatch(reset());
   }, [isError, isSuccess, message]);
+  // useEffect(() => {
+  //   if (request_name !== "create_project") {
+  //     return;
+  //   }
+  //   if (isError) {
+  //     message?.map((err) => {
+  //       toast.error(err.msg, {
+  //         autoClose: 1000,
+  //       });
+  //       dispatch(reset());
+  //     });
+  //   } else if (isSuccess) {
+  //     toast.success("Project Created", {
+  //       autoClose: 1000,
+  //     });
 
+  //     dispatch(reset());
+  //   } else if (isLoading) {
+  //   }
+  //   dispatch(empty_request_name());
+  // }, [isError, isSuccess, projects]);
   return (
     <div className="right_container_root">
       <Modal show={createProjectClicked} handleClose={toggleCreateBtn}>
@@ -172,12 +192,12 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
             projects.hasOwnProperty("data") &&
             projects.items_count !== 0 ? (
               projects?.data
-                .slice() // Create a copy of the array to avoid mutating the original data
+                ?.slice() // Create a copy of the array to avoid mutating the original data
                 .sort(
                   (a, b) => new Date(b["createdAt"]) - new Date(a["createdAt"])
                 ) // Sort by createdAt
                 .map((project, index) => {
-                  if (index > paginationIndex || index < paginationIndex - 4) {
+                  if (index >= paginationIndex || index < paginationIndex - 5) {
                     return <></>;
                   }
                   return (
@@ -219,8 +239,8 @@ const HomeRightContainer = ({ burger_menu_handler, burgerMenuClicked }) => {
                     onClick={handle_pagination}
                   />
                 )}
-                {projects.data !== null &&
-                  paginationIndex >= projects.data.length - 1 === false && (
+                {projects?.data !== null &&
+                  paginationIndex >= projects?.data.length - 1 === false && (
                     <BiSkipNext
                       size={35}
                       className="pagination_icon_right"

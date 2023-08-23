@@ -79,6 +79,7 @@ const Charts = ({ chartType, data }) => {
     { name: ".test", count: 10000 },
   ];
   let COLORS = ["#8884d8", "#b1a6de"];
+  // console.log(data);
   const pie_chart = (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
@@ -111,7 +112,7 @@ const Charts = ({ chartType, data }) => {
                   fontFamily="Outfit, sans-serif"
                   fill="#8884d8" // Color of the percentage label text
                 >
-                  {`${(percent * 100).toFixed(2)}%`}
+                  {`${(percent * 50).toFixed(2)}%`}
                 </text>
               );
             }}

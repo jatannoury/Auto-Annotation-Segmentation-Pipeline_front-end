@@ -14,7 +14,7 @@ const InProgressProject = ({
   const [processedNumber, setProcessedNumber] = useState(0);
   const [fileTypeDistribution, setFileTypeDistribution] = useState({});
   const [fileSizeDistribution, setFileSizeDistribution] = useState({});
-  const [timeDistribution, setTimeDistribution] = useState({});
+  const [timeDistribution, setTimeDistribution] = useState(null);
   const [runningProjectInfo, setRunningProjectInfo] = useState({});
   useEffect(() => {
     if (timeDistribution === {}) {
@@ -89,6 +89,7 @@ const InProgressProject = ({
       );
 
       setTotalNumber(input_keys.Contents.length);
+      console.log(input_keys);
       setProcessedNumber(output_keys.Contents.length);
       let files_type_distribution = {};
       let files_size_distribution = {};
@@ -217,45 +218,41 @@ const InProgressProject = ({
             </div>
           </div>
         </div>
-        <div className="progress_info_row">
-          <div className="info_conatiner">
+        <div className="progress_info_row second_row">
+          {/* <div className="info_conatiner" >
             <div className="info_header">Files Processing Time</div>
             <div className="info">
               <Charts chartType={"line"} />
             </div>
-          </div>
+          </div> */}
           <div className="info_conatiner">
             <div className="info_header">Elapsed Time</div>
             <div className="info">
               <div className="text_info">
                 <div className="elapsed_time_card">
                   <div>
-                    {timeDistribution["days"] ? timeDistribution["days"] : 0}
+                    {timeDistribution?.days ? timeDistribution?.days : 0}
                   </div>
                   <p className="time_elapsed_description">Days</p>
                 </div>
                 :
                 <div className="elapsed_time_card">
                   <div>
-                    {timeDistribution["hours"] ? timeDistribution["hours"] : 0}
+                    {timeDistribution?.hours ? timeDistribution?.hours : 0}
                   </div>
                   <p className="time_elapsed_description">Hours</p>
                 </div>
                 :
                 <div className="elapsed_time_card">
                   <div>
-                    {timeDistribution["minutes"]
-                      ? timeDistribution["minutes"]
-                      : 0}
+                    {timeDistribution?.minutes ? timeDistribution?.minutes : 0}
                   </div>
                   <p className="time_elapsed_description">Minutes</p>
                 </div>
                 :
                 <div className="elapsed_time_card">
                   <div>
-                    {timeDistribution["seconds"]
-                      ? timeDistribution["seconds"]
-                      : 0}
+                    {timeDistribution?.seconds ? timeDistribution?.seconds : 0}
                   </div>
                   <p className="time_elapsed_description">Seconds</p>
                 </div>

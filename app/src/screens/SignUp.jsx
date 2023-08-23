@@ -15,12 +15,16 @@ const SignUp = () => {
     (state) => state.auth
   );
   useEffect(() => {
+  
     if (isError) {
-      message.map((err)=>{
+      message?.map((err)=>{
         toast.error(`${err.loc[1]} ${err.msg}`, {
           autoClose: 2000,
         });
       })
+      // toast.error(`Error`, {
+      //   autoClose: 2000,
+      // });
       
       dispatch(reset())
     } else if (isSuccess) {

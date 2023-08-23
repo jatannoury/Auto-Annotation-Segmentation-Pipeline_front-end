@@ -92,6 +92,13 @@ const ProjectResults = ({
       <div className="results_viewer">
         {aggregatedInputData !== null && inputKeys !== null ? (
           aggregatedInputData.map((element, index) => {
+            const inputKey = inputKeys?.Contents[index]["Key"];
+            // console.log(inputKey);
+            if (inputKey.endsWith(".txt")) {
+              console.log(inputKey);
+              // Skip processing and displaying .txt files
+              return <></>;
+            }
             let uint8Array = new Uint8Array(element.Body);
             let base64String = btoa(String.fromCharCode(...uint8Array));
             let input_data_url = `data:image/jpeg;base64,${base64String}`;

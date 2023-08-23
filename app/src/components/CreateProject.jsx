@@ -30,27 +30,27 @@ const CreateProject = ({
     projects,
   } = useSelector((state) => state.projects);
 
-  useEffect(() => {
-    if (request_name !== "create_project") {
-      return;
-    }
-    if (isError) {
-      message.map((err) => {
-        toast.error(err.msg, {
-          autoClose: 1000,
-        });
-        dispatch(reset());
-      });
-    } else if (isSuccess) {
-      toast.success("Project Created", {
-        autoClose: 1000,
-      });
+  // useEffect(() => {
+  //   if (request_name !== "create_project") {
+  //     return;
+  //   }
+  //   if (isError) {
+  //     message?.map((err) => {
+  //       toast.error(err.msg, {
+  //         autoClose: 1000,
+  //       });
+  //       dispatch(reset());
+  //     });
+  //   } else if (isSuccess) {
+  //     toast.success("Project Created", {
+  //       autoClose: 1000,
+  //     });
 
-      dispatch(reset());
-    } else if (isLoading) {
-    }
-    dispatch(empty_request_name());
-  }, [isError, isSuccess, projects]);
+  //     dispatch(reset());
+  //   } else if (isLoading) {
+  //   }
+  //   dispatch(empty_request_name());
+  // }, [isError, isSuccess, projects]);
   const [formData, setFormData] = useState({
     projectName: "",
     totalNumber: 0,
@@ -72,7 +72,7 @@ const CreateProject = ({
   }
 
   return (
-    <div style={{ "margin-top": "5%" }}>
+    <div >
       <form className="form_inputs create_project_modal">
         <SignUpHeader placeholder={"Create New Project"} />
         <div className="row create_modal">

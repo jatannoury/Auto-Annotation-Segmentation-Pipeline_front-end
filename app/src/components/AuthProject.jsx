@@ -34,22 +34,22 @@ const AuthProject = ({
     e.preventDefault();
     toggleProjectClicked(false);
   };
-  
+
   useEffect(() => {
-    if (request_name !== "create_project" ) {
+    if (request_name !== "create_project") {
       return;
     }
     if (isError) {
-      message.map((err) => {
+      message?.map((err) => {
         toast.error(err.msg, {
           autoClose: 1000,
         });
         dispatch(reset());
       });
     } else if (isSuccess) {
-      toast.success("Project Created", {
-        autoClose: 1000,
-      });
+      // toast.success("Project Created", {
+      //   autoClose: 1000,
+      // });
 
       dispatch(empty_request_name());
       dispatch(reset());
@@ -71,7 +71,7 @@ const AuthProject = ({
     return <Spinner />;
   }
   return (
-    <div style={{ "margin-top": "5%" }}>
+    <div>
       <SignUpHeader placeholder={"Please Enter Password"} no_icon={true} />
       <div className="row create_modal authenticate">
         <SignUpInput
